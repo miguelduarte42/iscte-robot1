@@ -1,0 +1,5 @@
+Ideias para o Projecto de Robótica
+
+= Ideias =
+
+ * *Segway* - Parece-me uma boa ideia, mas talvez seja interessante ver se conseguimos ir mais além do que a funcionalidade de equilibrio. Pensei em talvez utilizar um objecto de cor Vermelho/Azul/Verde para influenciar o comportamento de robot. Talvez mostrando um objecto Vermelho fizesse com que o robot fosse em direcção a ele, etc...
