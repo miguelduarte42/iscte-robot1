@@ -1,4 +1,4 @@
-#Passos para instalar o SVN no Eclipse
+Passos para instalar o SVN no Eclipse
 
 = Introdução =
 
