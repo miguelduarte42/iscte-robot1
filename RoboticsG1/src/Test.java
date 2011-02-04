@@ -8,6 +8,8 @@ public class Test {
 		Motor m2 = Motor.B;
 		Motor m3 = Motor.C;
 		
+		//pequena alteracao :P test SVN Val
+		
 		UltrasonicSensor sensor = new UltrasonicSensor(SensorPort.S1);
 		TouchSensor touch1 = new TouchSensor(SensorPort.S2);
 		TouchSensor touch2 = new TouchSensor(SensorPort.S3);
