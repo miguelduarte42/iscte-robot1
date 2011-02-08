@@ -1,0 +1,19 @@
+#summary Segway Options.
+
+= Introdução =
+
+Questões específicas de Segway. Exemplos, opções, etc.
+
+
+= Detalhes =
+
+== Equilibrio ==
+
+Temos várias possibilidades de controlar o equilibrio no *Segway*.
+  * *Gyro-Sensor* - Encontrei este exemplo no youtube. http://www.youtube.com/watch?v=hpCwdu0e3i0&feature=related. Parece-me sinceramente melhor do que a medição do tilt com sensor de luz.
+
+  * *PID* - Verificar a questão do PID. http://en.wikipedia.org/wiki/PID_controller
+
+== Contrução ==
+
+  * *Exemplo* - Acho que podemos aproveitar muito do desenho desta página para o Segway. http://www.nxtprograms.com/NXT2/segway/steps.html
