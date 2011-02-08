@@ -12,4 +12,4 @@ Questões específicas de Segway. Exemplos, opções, etc.
 Temos várias possibilidades de controlar o equilibrio no *Segway*.
   * *Gyro-Sensor* - Encontrei este exemplo no youtube. http://www.youtube.com/watch?v=hpCwdu0e3i0. Parece-me sinceramente melhor do que a medição do tilt com sensor de luz.
 
-  * *PID* - Verificar a questão do PID. http://en.wikipedia.org/wiki/PID_controller
+  * *PID* - Verificar a questão do PID: http://en.wikipedia.org/wiki/PID_controller e http://www.inpharmix.com/jps/PID_Controller_For_Lego_Mindstorms_Robots.html
