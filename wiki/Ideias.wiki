@@ -8,10 +8,12 @@ Ideias para o Projecto de Robótica
 
  * *Camara Rotativa* - Usar um terceiro motor no topo do robot para que possa rodar o sensor de cor, para conseguir identificar mais facilmente o objecto de cor.
 
+ * *Seguir uma linha* - Uma das tarefas poderia ser seguir uma linha, tal como neste vídeo: http://www.youtube.com/watch?v=qLDKEjKZPDg (no vídeo mostram 2 algoritmos com resultados bastante diferentes)
+
 == Segway ==
 
 Temos várias possibilidades de controlar o equilibrio no *Segway*.
-  * *Gyro-Sensor* - Encontrei este exemplo no youtube. http://www.youtube.com/watch?v=hpCwdu0e3i0&feature=related. Parece-me sinceramente melhor do que a medição do tilt com sensor de luz.
+  * *Gyro-Sensor* - Encontrei este exemplo no youtube. http://www.youtube.com/watch?v=hpCwdu0e3i0. Parece-me sinceramente melhor do que a medição do tilt com sensor de luz.
 
 == Construção ==
 
