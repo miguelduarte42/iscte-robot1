@@ -20,3 +20,7 @@ Temos várias possibilidades de controlar o equilibrio no *Segway*.
   * *Exemplo* - Acho que podemos aproveitar muito do desenho desta página para o Segway. http://www.nxtprograms.com/NXT2/segway/steps.html
 
  * *Bumper + camera* - Exemplo de um robot com bumper e camera móvel. http://www.nxtprograms.com/NXT2/explorer/steps.html
+
+== Programação ==
+
+ * *Behaviour* - Este artigo fala sobre _behaviour programing_. Achei muito interessante, até porque podemos cada um de nós contribuir com um _behaviour_ diferente, e coordenar todas as ideias.
