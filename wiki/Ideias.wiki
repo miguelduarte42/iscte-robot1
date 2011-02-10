@@ -24,3 +24,7 @@ Temos várias possibilidades de controlar o equilibrio no *Segway*.
 == Programação ==
 
  * *Behaviour* - Este artigo fala sobre _behaviour programing_. Achei muito interessante, até porque podemos cada um de nós contribuir com um _behaviour_ diferente, e coordenar todas as ideias.
+
+== Comunicação ==
+
+ * *Bluethooth* - É possível ligar um PC ao brick através de Bluetooth. Nesta página está um tutorial: http://lejos.sourceforge.net/nxt/nxj/tutorial/Communications/Communications.htm
