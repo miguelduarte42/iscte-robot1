@@ -1,0 +1,10 @@
+#summary Tips about the Gyro Sensor
+
+= Introduction =
+
+O sensor Gyro tem alguns pormenores que importa saber para ser bem usado.
+
+
+= Details =
+
+ * *Calibração* - Um bom artigo sobre a calibração do Gyro. http://nxttime.wordpress.com/2010/11/03/gyro-offset-and-drift/
