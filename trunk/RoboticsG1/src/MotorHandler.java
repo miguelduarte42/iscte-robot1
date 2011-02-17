@@ -1,3 +1,4 @@
+import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 
 public class MotorHandler {
@@ -17,11 +18,11 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 17; //falling speed has a lower influence than the angle Default: 1.15
-	private static double KGYROANGLE = 25.5; //the greater the angle, the more speed you get Default: 7.5
-	private static double KPOS = 0.07;
+	private static double KGYROSPEED = 19; //falling speed has a lower influence than the angle Default: 1.15
+	private static double KGYROANGLE = 32.5; //the greater the angle, the more speed you get Default: 7.5
+	private static double KPOS = 0; //0.0001
 	private static double KSTEER = 0;
-	private static double KSPEED = 0.6; //decrease the wheel speed
+	private static double KSPEED = 0.65; //decrease the wheel speed 0.6 <->0.8
 	private static double KDRIVE = -0.02;
 	private static double KWHEEL = 1; //the value for our wheels
 	
@@ -84,6 +85,13 @@ public class MotorHandler {
 		//m2.setPower(Math.abs((int)powerRight));
 		
 		//System.out.println("pL "+powerLeft);
+		
+		LCD.drawString(("MP:"+motorPosition+"    ").substring(0,9), 0, 0);
+		/*LCD.drawString(("MS:"+motorSpeed+"    ").substring(0,9), 0, 1);
+		LCD.drawString(("GS:"+gyroSpeed+"    ").substring(0,9), 0, 2);*/
+		LCD.drawString(("GA:"+gyroAngle+"    ").substring(0,9), 0, 3);
+		//LCD.drawString(("PL:"+powerLeft+"    ").substring(0,9), 0, 4);
+		
 		
 		if(powerLeft > 0){
 			m1.forward();

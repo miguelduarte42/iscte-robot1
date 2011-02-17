@@ -37,8 +37,8 @@ public class GyroHandler {
 		
 		offset = offset*0.9995 + gyroCurrentValue*0.0005;
 		speed = gyroCurrentValue - offset;
+		//angle = (angle + timeInterval*speed)*0.99 - (angle*0.01);
 		angle = angle + timeInterval*speed;
-		
 		//System.out.println("interval:"+timeInterval);
 		//System.out.println("Angle:"+angle);
 		//System.out.println("Speed:"+speed);
