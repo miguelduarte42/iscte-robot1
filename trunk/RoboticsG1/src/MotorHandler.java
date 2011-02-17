@@ -17,13 +17,13 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 1.15; //falling speed has a lower influence than the angle Default: 1.15
-	private static double KGYROANGLE = 7.5; //the greater the angle, the more speed you get Default: 7.5
+	private static double KGYROSPEED = 17; //falling speed has a lower influence than the angle Default: 1.15
+	private static double KGYROANGLE = 25.5; //the greater the angle, the more speed you get Default: 7.5
 	private static double KPOS = 0.07;
 	private static double KSTEER = 0;
-	private static double KSPEED = 0.1; //decrease the wheel speed
+	private static double KSPEED = 0.6; //decrease the wheel speed
 	private static double KDRIVE = -0.02;
-	private static double KWHEEL = 0.8; //the value for our wheels
+	private static double KWHEEL = 1; //the value for our wheels
 	
 	public MotorHandler(Motor m1, Motor m2) {
 		this.m1 = m1;
@@ -37,8 +37,8 @@ public class MotorHandler {
 	 */
 	public void readValues(double timeInterval) {
 		
-		double rotateLeft = m1.getRotationSpeed();
-		double rotateRight = m2.getRotationSpeed();
+		double rotateLeft = m1.getTachoCount();
+		double rotateRight = m2.getTachoCount();
 		
 		double rotateSumPrev = rotateSum;
 		this.rotateSum = rotateLeft + rotateRight;
@@ -78,13 +78,17 @@ public class MotorHandler {
 		//System.out.println(gyroAngle);
 		//System.out.println("Power:"+powerLeft);
 		
-		m1.setPower(Math.abs((int)powerLeft));
-		m2.setPower(Math.abs((int)powerRight));		
+		m1.setSpeed(Math.abs((int)powerLeft));
+		m2.setSpeed(Math.abs((int)powerRight));
+		//m1.setPower(Math.abs((int)powerLeft));
+		//m2.setPower(Math.abs((int)powerRight));
 		
-		if(powerLeft < 0){
+		//System.out.println("pL "+powerLeft);
+		
+		if(powerLeft > 0){
 			m1.forward();
 			m2.forward();
-		}else if(powerLeft > 0){
+		}else if(powerLeft < 0){
 			m1.backward();
 			m2.backward();
 		}
@@ -109,12 +113,12 @@ public class MotorHandler {
 	  powerRight = power - powerSteer;
 
 	  // Limit the power to motor power range -100 to 100
-	  if (powerLeft > 100)   powerLeft = 100;
-	  if (powerLeft < -100)  powerLeft = -100;
+	 // if (powerLeft > 100)   powerLeft = 100;
+	 // if (powerLeft < -100)  powerLeft = -100;
 
 	  // Limit the power to motor power range -100 to 100
-	  if (powerRight > 100)  powerRight = 100;
-	  if (powerRight < -100) powerRight = -100;
+	  //if (powerRight > 100)  powerRight = 100;
+	  //if (powerRight < -100) powerRight = -100;
 	}
 
 }
