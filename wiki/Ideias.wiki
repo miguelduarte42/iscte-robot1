@@ -15,6 +15,8 @@ Ideias para o Projecto de Robótica
 Temos várias possibilidades de controlar o equilibrio no *Segway*.
   * *Gyro-Sensor* - Encontrei este exemplo no youtube. http://www.youtube.com/watch?v=hpCwdu0e3i0. Parece-me sinceramente melhor do que a medição do tilt com sensor de luz.
 
+  * *Exemplos* - WebPage com vários exemplos de "Balancing Robots". http://www.geology.smu.edu/~dpa-www/robo/nbot/
+
 == Construção ==
 
   * *Exemplo* - Acho que podemos aproveitar muito do desenho desta página para o Segway. http://www.nxtprograms.com/NXT2/segway/steps.html
