@@ -18,8 +18,8 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 20; //falling speed has a lower influence than the angle Default: 1.15
-	private static double KGYROANGLE = 20; //the greater the angle, the more speed you get Default: 7.5
+	private static double KGYROSPEED = 20; // Default: 1.15
+	private static double KGYROANGLE = 20; //Default: 7.5
 	private static double KSTEER = 0;
 	private static double KSPEED = 0.01; //decrease the wheel speed 0.6 <->0.8
 	private static double KDRIVE = -0.02;
@@ -62,15 +62,15 @@ public class MotorHandler {
 	 * 
 	 * @param gyroSpeed		the current falling speed measured by the GyroSensor
 	 * @param gyroAngle		the current angle at which the robot is facing
+	 * @param timeInterval	the amount of time that has passed since the last update
 	 */
 	public void updateWheelPower(double gyroSpeed, double gyroAngle, double timeInterval) {
 		
-		if(Math.abs(gyroSpeed) < 1)
+		if(Math.abs(gyroSpeed) < 1)//this might be deleted
 			gyroSpeed = 0;
 		
 		double power = KGYROSPEED * gyroSpeed +
 						KGYROANGLE * gyroAngle +
-	             		KDRIVE * 0 + //we don't want to drive... for now
 	             		KSPEED * ((powerLeft+powerRight)/2);
 		
 		//SteerControl(power,timeInterval);
@@ -78,19 +78,14 @@ public class MotorHandler {
 		//System.out.println("Power:"+powerLeft);
 		powerLeft=powerRight=power;
 		
-		
-		
 		m1.setSpeed(Math.abs((int)powerLeft));
 		m2.setSpeed(Math.abs((int)powerRight));
-		//m1.setPower(Math.abs((int)powerLeft));
-		//m2.setPower(Math.abs((int)powerRight));
 		
 		//System.out.println("pL "+powerLeft);
 		
 		LCD.drawString(("PW:"+powerLeft+"    ").substring(0,9), 0, 0);
 		LCD.drawString(("GS:"+gyroSpeed+"    ").substring(0,9), 0, 1);
 		LCD.drawString(("GA:"+gyroAngle+"    ").substring(0,9), 0, 2);
-		//LCD.drawString(("PL:"+powerLeft+"    ").substring(0,9), 0, 4);
 		
 		
 		if(powerLeft > 0){
@@ -119,14 +114,6 @@ public class MotorHandler {
 	  // get the left and right power values.
 	  powerLeft = power + powerSteer;
 	  powerRight = power - powerSteer;
-
-	  // Limit the power to motor power range -100 to 100
-	 // if (powerLeft > 100)   powerLeft = 100;
-	 // if (powerLeft < -100)  powerLeft = -100;
-
-	  // Limit the power to motor power range -100 to 100
-	  //if (powerRight > 100)  powerRight = 100;
-	  //if (powerRight < -100) powerRight = -100;
 	}
 	
 	public double getSpeed(){
