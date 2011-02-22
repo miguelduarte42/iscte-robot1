@@ -10,6 +10,8 @@ Ideias para o Projecto de Robótica
 
  * *Seguir uma linha* - Uma das tarefas poderia ser seguir uma linha, tal como neste vídeo: http://www.youtube.com/watch?v=qLDKEjKZPDg (no vídeo mostram 2 algoritmos com resultados bastante diferentes)
 
+ * *Lembrar-se de um percurso* - Após seguir uma linha, seria interessante o robot lembrar-se do percurso e poder mais tarde executá-lo sem necessitar da linha
+
 == Segway ==
 
 Temos várias possibilidades de controlar o equilibrio no *Segway*.
