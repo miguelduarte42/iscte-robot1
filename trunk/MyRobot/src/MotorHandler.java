@@ -18,13 +18,11 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 19; //falling speed has a lower influence than the angle Default: 1.15
-	private static double KGYROANGLE = 32.5; //the greater the angle, the more speed you get Default: 7.5
-	private static double KPOS = 0; //0.0001
+	private static double KGYROSPEED = 20; //falling speed has a lower influence than the angle Default: 1.15
+	private static double KGYROANGLE = 20; //the greater the angle, the more speed you get Default: 7.5
 	private static double KSTEER = 0;
-	private static double KSPEED = 0.65; //decrease the wheel speed 0.6 <->0.8
+	private static double KSPEED = 0.01; //decrease the wheel speed 0.6 <->0.8
 	private static double KDRIVE = -0.02;
-	private static double KWHEEL = 1; //the value for our wheels
 	
 	public MotorHandler(Motor m1, Motor m2) {
 		this.m1 = m1;
@@ -70,14 +68,17 @@ public class MotorHandler {
 		if(Math.abs(gyroSpeed) < 1)
 			gyroSpeed = 0;
 		
-		double power = (KGYROSPEED * gyroSpeed + KGYROANGLE * gyroAngle) /KWHEEL +
-	             		KPOS * motorPosition +
+		double power = KGYROSPEED * gyroSpeed +
+						KGYROANGLE * gyroAngle +
 	             		KDRIVE * 0 + //we don't want to drive... for now
-	             		KSPEED * motorSpeed;
+	             		KSPEED * ((powerLeft+powerRight)/2);
 		
-		SteerControl(power,timeInterval);
+		//SteerControl(power,timeInterval);
 		//System.out.println(gyroAngle);
 		//System.out.println("Power:"+powerLeft);
+		powerLeft=powerRight=power;
+		
+		
 		
 		m1.setSpeed(Math.abs((int)powerLeft));
 		m2.setSpeed(Math.abs((int)powerRight));
@@ -86,10 +87,9 @@ public class MotorHandler {
 		
 		//System.out.println("pL "+powerLeft);
 		
-		LCD.drawString(("MP:"+motorPosition+"    ").substring(0,9), 0, 0);
-		/*LCD.drawString(("MS:"+motorSpeed+"    ").substring(0,9), 0, 1);
-		LCD.drawString(("GS:"+gyroSpeed+"    ").substring(0,9), 0, 2);*/
-		LCD.drawString(("GA:"+gyroAngle+"    ").substring(0,9), 0, 3);
+		LCD.drawString(("PW:"+powerLeft+"    ").substring(0,9), 0, 0);
+		LCD.drawString(("GS:"+gyroSpeed+"    ").substring(0,9), 0, 1);
+		LCD.drawString(("GA:"+gyroAngle+"    ").substring(0,9), 0, 2);
 		//LCD.drawString(("PL:"+powerLeft+"    ").substring(0,9), 0, 4);
 		
 		
@@ -127,6 +127,10 @@ public class MotorHandler {
 	  // Limit the power to motor power range -100 to 100
 	  //if (powerRight > 100)  powerRight = 100;
 	  //if (powerRight < -100) powerRight = -100;
+	}
+	
+	public double getSpeed(){
+		return powerLeft;
 	}
 
 }

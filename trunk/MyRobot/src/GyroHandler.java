@@ -1,7 +1,9 @@
+
+
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
-//import lejos.nxt.addon.GyroSensor;
+import lejos.nxt.addon.GyroSensor;
 
 public class GyroHandler {
 	
@@ -36,7 +38,7 @@ public class GyroHandler {
 		offset = offset*0.9995 + gyroCurrentValue*0.0005;
 		speed = gyroCurrentValue - offset;
 		//angle = (angle + timeInterval*speed)*0.99 - (angle*0.01);
-		angle = angle + timeInterval*speed;
+		angle = (angle + timeInterval*speed)*0.995;
 		//System.out.println("interval:"+timeInterval);
 		//System.out.println("Angle:"+angle);
 		//System.out.println("Speed:"+speed);
@@ -51,16 +53,13 @@ public class GyroHandler {
 		
 		Sound.twoBeeps(); //warn that the calibration is starting
 		
-		//gyroSensor.setOffset(0);
-
+		gyroSensor.setOffset(0);
+		
 		LCD.clearDisplay();
 		System.out.println("Calibration...");
 		
-		gyroSensor.setZero();
-		gyroSensor.display();
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           	
- 		double cumulator = 0;
- 		double loops = 200.0; //double (not int) because of the division
+		double cumulator = 0;
+		double loops = 200.0; //double (not int) because of the division
 		
 		for(int i = 0 ; i < loops ; i++) {
 			cumulator+=gyroSensor.readValue();
