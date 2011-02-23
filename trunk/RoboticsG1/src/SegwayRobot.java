@@ -1,5 +1,4 @@
 
-
 import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
@@ -37,7 +36,9 @@ public class SegwayRobot {
 		
 		long loopCount = 0;
 		
-		while(true){
+		boolean standing = true;
+		
+		while(standing){
 			
 			LCD.clear();
 			
@@ -47,6 +48,8 @@ public class SegwayRobot {
 			motorHandler.readValues(timeInterval);
 			
 			motorHandler.updateWheelPower(gyroHandler.getSpeed(),gyroHandler.getAngle(), timeInterval);
+			
+			standing = Math.abs(gyroHandler.getAngle()) > 50;
 			
 			try{
 				Thread.sleep((int)(WAIT_TIME*1000));
