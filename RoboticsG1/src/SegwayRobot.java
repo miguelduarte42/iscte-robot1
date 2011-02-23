@@ -49,7 +49,7 @@ public class SegwayRobot {
 			
 			motorHandler.updateWheelPower(gyroHandler.getSpeed(),gyroHandler.getAngle(), timeInterval);
 			
-			standing = Math.abs(gyroHandler.getAngle()) > 50;
+			standing = Math.abs(gyroHandler.getAngle()) < 50;
 			
 			try{
 				Thread.sleep((int)(WAIT_TIME*1000));
