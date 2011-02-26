@@ -1,10 +1,13 @@
-
-
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
 import lejos.nxt.addon.GyroSensor;
 
+/**
+ * The GyroHandler class is responsible for everything related to the
+ * Gyroscope Sensor. Besides reading the values from the sensor itself,
+ * it 
+ */
 public class GyroHandler {
 	
 	private GyroSensor gyroSensor;
@@ -15,19 +18,26 @@ public class GyroHandler {
 	/**
 	 * Initializes and calibrates the GyroSensor
 	 * 
-	 * @param port		The physical port for the GyroSensor on the robot
+	 * @param port				The physical port for the GyroSensor on the robot
+	 * @param autoCalibration	Indicates whether to automatically calibrate the sensor
 	 */
-	public GyroHandler(SensorPort port) {
+	public GyroHandler(SensorPort port, boolean autoCalibration) throws Exception{
 		gyroSensor = new GyroSensor(port);
 		this.offset = 0;
 		this.angle = 0;
 		this.speed = 0;
 		
-		calibrate();
+		if(autoCalibration)
+			calibrate();
+		
 	}
 	
 	/**
-	 * Reads the falling speed, updates the offset and calculates the current angle
+	 * Reads the falling speed, updates the offset and calculates the current angle.
+	 * The angle's calculation is prone to errors since it's derived from integral of 
+	 * the gyroscope's speed readings. This means that there will be an increasing error
+	 * over time. To compensate, the angle is slightly modified to approach 0 degrees,
+	 * which is the desired value when the robot is upright.
 	 * 
 	 * @param timeInterval		how much time has passed since the last reading
 	 */
@@ -41,40 +51,37 @@ public class GyroHandler {
 
 	}
 	/**
-	 * Calibrates the offset value of the GyroSensor. Every GyroSensor
+	 * Calibrates the offset value of the Gyroscope. Every Gyroscope Sensor
 	 * has errors that might result in wrong readings, so the amount of
-	 * correction needed has to be measured. 
+	 * correction needed has to be measured. The robot must be completely
+	 * still during the calibration process.
 	 */
-	public void calibrate(){
+	public void calibrate() throws Exception{
 		
-		Sound.twoBeeps(); //warn that the calibration is starting
+		//warn that the calibration is starting
+		Sound.twoBeeps();
 		
 		gyroSensor.setOffset(0);
 		
 		LCD.clearDisplay();
-		System.out.println("Calibration...");
+		LCD.drawString("Calibration...",0,0);
 		
 		double cumulator = 0;
 		double loops = 200.0; //double (not int) because of the division
 		
 		for(int i = 0 ; i < loops ; i++) {
+			
 			cumulator+=gyroSensor.readValue();
 			
-			try{
-				Thread.sleep(10);
-			}catch(Exception e){
-				
-			}
-			
+			Thread.sleep(10);
 		}
-		double average = cumulator / loops;
 		
-		LCD.clearDisplay();
-		System.out.println("Calibrated at: " + average);
+		this.offset = cumulator / loops;
 		
-		this.offset = average;
+		LCD.drawString("Calibrated at: " + offset,0,1);
 		
-		Sound.twoBeeps(); //warn that the calibration ended
+		//warn that the calibration ended
+		Sound.twoBeeps();
 	}
 	
 	public double getAngle() {
