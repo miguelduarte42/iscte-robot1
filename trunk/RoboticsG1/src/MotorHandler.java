@@ -18,11 +18,11 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 17; //falling speed has a lower influence than the angle Default: 1.15
-	private static double KGYROANGLE = 25.5; //the greater the angle, the more speed you get Default: 7.5
+	private static double KGYROSPEED = 17; //Default: 1.15
+	private static double KGYROANGLE = 25.5; //Default: 7.5
 	private static double KPOS = 0.07;
 	private static double KSTEER = 1;
-	private static double KSPEED = 0.6; //decrease the wheel speed
+	private static double KSPEED = 0.6;
 	private static double KDRIVE = -0.02;
 	private static double KWHEEL = 1; //the value for our wheels
 	
@@ -126,14 +126,6 @@ public class MotorHandler {
 	  
 	  powerLeft = power;// + powerSteer;
 	  powerRight = power;// - powerSteer;
-
-	  // Limit the power to motor power range -100 to 100
-	 // if (powerLeft > 100)   powerLeft = 100;
-	 // if (powerLeft < -100)  powerLeft = -100;
-
-	  // Limit the power to motor power range -100 to 100
-	  //if (powerRight > 100)  powerRight = 100;
-	  //if (powerRight < -100) powerRight = -100;
 	}
 
 }

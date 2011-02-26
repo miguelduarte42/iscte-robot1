@@ -1,41 +1,70 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+
+import lejos.nxt.LCD;
 import lejos.nxt.comm.BTConnection;
 import lejos.nxt.comm.Bluetooth;
 
-
+/**
+ * This class is responsible for all Bluetooth communication
+ * between the brick and a computer. It allows the sending and
+ * receiving of messages.
+ */
 public class BluetoothHandler{
 	
+	/** indicates if the bluetooth communication is active**/
 	private boolean connectionAvailable = false;
+
 	private DataReceiver dataReceiver;
-	private DataSender dataSender;
+	private DataOutputStream outputStream;
 	
 	public BluetoothHandler() throws Exception{
 		
-		System.out.println("Waiting for BT");
+		LCD.clearDisplay();
+		
+		LCD.drawString("Waiting for BT",0,0);
 		BTConnection connection = Bluetooth.waitForConnection();
 		
 		if (connection == null) {
-			System.out.println("No BT connection");
+			LCD.drawString("No BT connection",0,1);
 			throw new Exception();
 		}
 		
-		System.out.println("Connected to BT!");
+		LCD.drawString("Connected to BT!",0,1);
 		connectionAvailable = true;
 		
 		DataInputStream inputStream = connection.openDataInputStream();
-		DataOutputStream outputStream = connection.openDataOutputStream();
-		System.out.println("Opened Streams");
+		outputStream = connection.openDataOutputStream();
+		LCD.drawString("Opened Streams",0,2);
 		
 		this.dataReceiver = new DataReceiver(inputStream);
-		this.dataSender = new DataSender(outputStream);
 		this.dataReceiver.start();
 	}
 	
+	/**
+	 * Sends a message through the bluetooth channel
+	 * if the connection is active. The \n appended
+	 * to the message enables the use of readLine
+	 * on the receiving end of the communication.
+	 * 
+	 * @param message	the message to send
+	 */
 	public void sendMessage(String message){
-		dataSender.sendMessage(message);
+		if(connectionAvailable)
+			try{
+				outputStream.writeBytes(message+"\n");
+				outputStream.flush();
+			}catch(Exception e){
+				System.out.println("OutputStream died");
+				connectionAvailable = false;
+			}
 	}
 	
+	/**
+	 * This thread is responsible for waiting for messages
+	 * sent over bluetooth and relaying them to the main
+	 * control of the robot.
+	 */
 	private class DataReceiver extends Thread {
 		
 		private DataInputStream inputStream;
@@ -56,26 +85,7 @@ public class BluetoothHandler{
 			}
 		}
 	}
-	
-	private class DataSender {
-		
-		private DataOutputStream outputStream;
-		
-		public DataSender(DataOutputStream outputStream){
-			this.outputStream = outputStream;
-		}
-		
-		private void sendMessage(String toSend){
-			try{
-				outputStream.writeBytes(toSend+"\n");
-				outputStream.flush();
-			}catch(Exception e){
-				System.out.println("OutputStream died");
-				connectionAvailable = false;
-			}
-		}
-	}
-	
+
 	public boolean getStatus() {
 		return connectionAvailable;
 	}
