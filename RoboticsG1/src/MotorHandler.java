@@ -97,35 +97,24 @@ public class MotorHandler {
 		}
 	}
 	
-	private void SteerControl(double power, double timeInterval) {
-	  double powerSteer;
+    private void SteerControl(double power, double timeInterval) {
+        double powerSteer;
 
-	  // Update the target motor difference based on the user steering
-	  // control value.
-	  double motorControlSteer = 0.9;
-	  //motorDiffTarget += motorControlSteer * timeInterval;
+        // Update the target motor difference based on the user steering
+        // control value.
+        double motorControlSteer = 0;
+        motorDiffTarget += motorControlSteer * timeInterval;
 
-	  // Determine the proportionate power differential to be used based
-	  // on the difference between the target motor difference and the
-	  // actual motor difference.
-	  powerSteer = KSTEER * (motorDiffTarget - motorDiff);
-	  LCD.drawString("PS:"+powerSteer, 0, 0);
-	  // Apply the power steering value with the main power value to
-	  // get the left and right power values.
-	  
-	  if(motorControlSteer > 0){
-		  powerRight = power*Math.abs(motorControlSteer);
-		  powerLeft = power;
-	  }else if(motorControlSteer < 0){
-		  powerLeft=power*Math.abs(motorControlSteer);
-		  powerRight = power;
-	  }else {
-		  powerLeft = power;
-		  powerRight = power;
-	  }
-	  
-	  powerLeft = power;// + powerSteer;
-	  powerRight = power;// - powerSteer;
-	}
+        // Determine the proportionate power differential to be used based
+        // on the difference between the target motor difference and the
+        // actual motor difference.
+        powerSteer = KSTEER * (motorDiffTarget - motorDiff);
+
+        // Apply the power steering value with the main power value to
+        // get the left and right power values.
+        powerLeft = power + powerSteer;
+        powerRight = power - powerSteer;
+      }
+
 
 }
