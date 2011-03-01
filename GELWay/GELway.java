@@ -93,9 +93,10 @@ class GELway extends Thread
       LCD.clear();
       Behavior b1 = new GELwayDriver(ctrl, br); // Needed to drive robot and slave
       // Behavior b1 = new GELwayFollower(ctrl);
-      Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
+      // Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
       // Behavior b3 = new KeepStraight(ctrl); // Needed to keep straight
-      Behavior[] bArray = { b1, b2 };
+      // Behavior[] bArray = { b1, b2 };
+      Behavior[] bArray = { b1};
       Arbitrator arby = new Arbitrator(bArray);
       arby.start();
    }

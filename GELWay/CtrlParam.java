@@ -1,6 +1,6 @@
 /**
  * This class is utilised to set and get common parameters between the Balance and
- * Behavioural threads. It is used to offset the motors power levels and the tilt offset of
+ * Behavioral threads. It is used to offset the motors power levels and the tilt offset of
  * the robot.
  * 
  * @author Steven Witzand
@@ -120,7 +120,7 @@ class CtrlParam
       return this.upright;
    }
    /**
-    * Testing methods used to slow the initial accelleration of the GELway
+    * Testing methods used to slow the initial acceleration of the GELway
     */
    public void setDamp(double weight)
    {
