@@ -16,7 +16,7 @@ public class BalanceController extends Thread
    private final double Kp = 1.2;
    private final double Ki = 0.25;
    private final double Kd = 0.1;
-   private final int eopdThresh = 1022;
+   private final int eopdThresh = 98; // [NCA] Changed to use normalized color sensor readings
    double num = 0.0;
    int startLog = 0;
    static double damp = 0.1;

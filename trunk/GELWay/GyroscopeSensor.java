@@ -1,5 +1,6 @@
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 import lejos.nxt.*;
+import lejos.util.Delay;
 
 /**
  * This class is designed to work with the HiTechnic Gyrosensor. It has methods to calculate
@@ -38,12 +39,9 @@ public class GyroscopeSensor
       double offsetTotal = 0;
       LCD.drawString("Calibrating Gyro", 0, 2);
       for (int i = 0; i < 50; i++) {
-          LCD.drawString("Calibrating Gyro: nº " + i, 0, 2);
+          LCD.drawString("N: " + i, 0, 3);
          offsetTotal += (double) port.readValue();
-         try {
-            Thread.sleep(4);
-         } catch (InterruptedException e) {
-         }
+         Delay.msDelay(4);
       }
       while (!Button.ENTER.isPressed()) {
          lastOffset = Math.ceil(offsetTotal / 50) + 1;
