@@ -18,3 +18,4 @@ Temos várias possibilidades de controlar o equilibrio no *Segway*.
 
  * http://web.mac.com/ryo_watanabe/iWeb/Ryo's%20Holiday/NXTway-G.html
  * http://www.hitechnic.com/blog/gyro-sensor/htway/
+ * http://www.it.uu.se/edu/course/homepage/styrsystem/vt10/Nyheter/Grupper
