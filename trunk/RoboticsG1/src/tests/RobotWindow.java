@@ -1,4 +1,4 @@
-package tests;
+/*package tests;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ public class RobotWindow {
 	JButton startButton;
 	boolean startRobot = false;
 	
-	/** A simple class that records a pair of integer coordinates. */
+	*//** A simple class that records a pair of integer coordinates. *//*
 	private static class Point {
 
 		final double x;
@@ -139,4 +139,4 @@ public class RobotWindow {
 		RobotWindow rw = new RobotWindow();
 		rw.execute();
 	}
-}
+}*/
