@@ -23,13 +23,11 @@ public class SegwayRobot {
 			this.gyroHandler = new GyroHandler(GYRO_SENSOR, true);
 
 			this.motorHandler = new MotorHandler(MOTOR_1, MOTOR_2);
-			this.bluetoothHandler = new BluetoothHandler();
+			//this.bluetoothHandler = new BluetoothHandler();
 
-			createButtonListeners(); //Test function (to remove)
+			//createButtonListeners(); //Test function (to remove)
 
 			this.timeStart = System.currentTimeMillis();
-
-			this.execute();
 
 		} catch (Exception e) {
 			System.out.println("Init failure");
