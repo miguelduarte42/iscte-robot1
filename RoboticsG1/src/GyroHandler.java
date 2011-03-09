@@ -75,7 +75,7 @@ public class GyroHandler {
 			
 			Thread.sleep(10);
 		}
-		
+		this.angle = 0;
 		this.offset = cumulator / loops;
 		
 		LCD.drawString("Calibrated at: " + offset,0,1);
