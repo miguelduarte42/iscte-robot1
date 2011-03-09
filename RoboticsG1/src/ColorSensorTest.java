@@ -1,9 +1,6 @@
-import java.net.ServerSocket;
-
 import lejos.nxt.ColorLightSensor;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
-import lejos.nxt.addon.ColorSensor;
 import lejos.robotics.Colors.Color;
 import lejos.util.Delay;
 
@@ -14,7 +11,7 @@ public class ColorSensorTest {
 	
 	public void readColors(){
 		
-		color_sensor = new ColorLightSensor(SensorPort.S1, ColorLightSensor.TYPE_COLORFULL);
+		color_sensor = new ColorLightSensor(SensorPort.S2, ColorLightSensor.TYPE_COLORFULL);
 		int i = 10000;
 		
 		color_sensor.setFloodlight(Color.WHITE);
@@ -33,7 +30,8 @@ public class ColorSensorTest {
 		while(i != 0){
 		
 			int lightValue = color_sensor.getLightValue();
-			LCD.drawString("Light VAlue: " + lightValue, 0, 0, 0);
+			LCD.drawString("Waiting for BT",0,0);
+			LCD.drawString("Light Value: " + lightValue, 0, 2);
 			i--;
 		}
 		
@@ -41,7 +39,7 @@ public class ColorSensorTest {
 	}
 	
 	public static void main(String [] args){
-		
+		System.out.print("Start Program");
 		ColorSensorTest c = new ColorSensorTest();
 		c.readColors();
 	}
