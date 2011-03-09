@@ -26,12 +26,19 @@ public class ColorSensorTest {
 		color_sensor.setFloodlight(Color.GREEN);
 		color_sensor.setFloodlight(Color.WHITE);
 		
+		int lightValue; 
 		
 		while(i != 0){
-		
-			int lightValue = color_sensor.getLightValue();
+			color_sensor.setFloodlight(Color.RED);
+			color_sensor.setFloodlight(Color.BLUE);
+			color_sensor.setFloodlight(Color.GREEN);
+			color_sensor.setFloodlight(Color.WHITE);
+			lightValue = color_sensor.getLightValue();
 			LCD.drawString("Waiting for BT",0,0);
 			LCD.drawString("Light Value: " + lightValue, 0, 2);
+			LCD.drawString("Red:   " + color_sensor.getRedComponent(), 0, 3);
+			LCD.drawString("Green: " + color_sensor.getGreenComponent(), 0, 4);
+			LCD.drawString("Blue:  " + color_sensor.getBlueComponent(), 0, 5);
 			i--;
 		}
 		
