@@ -110,6 +110,12 @@ public class SegwayRobot {
 
 			public void buttonReleased(Button b) {
 				sendMessage("ENTER released");
+				try {
+					gyroHandler.calibrate();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					
+				}
 			}
 		});
 
@@ -120,7 +126,7 @@ public class SegwayRobot {
 			}
 
 			public void buttonReleased(Button arg0) {
-				sendMessage("ENTER released");
+				sendMessage("ESC released");
 			}
 		});
 	}
