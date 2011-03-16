@@ -16,6 +16,8 @@ public class SegwayRobot {
 
 	private double timeStart;
 
+	private long lastTick = System.currentTimeMillis();
+	
 	public SegwayRobot() {
 
 		try {
@@ -55,7 +57,7 @@ public class SegwayRobot {
 			motorHandler.updateWheelPower(gyroHandler.getSpeed(),
 					gyroHandler.getAngle(), timeInterval);
 
-			standing = Math.abs(gyroHandler.getAngle()) < 50;
+			//standing = Math.abs(gyroHandler.getAngle()) < 50;
 
 			try {
 				Thread.sleep((int) (WAIT_TIME * 1000));
@@ -83,9 +85,13 @@ public class SegwayRobot {
 			
 		if (loopCount == 0)
 			return WAIT_TIME;
+
+		double timeInterval = 	(System.currentTimeMillis()-this.lastTick) / 1000.0;
+		this.lastTick =  System.currentTimeMillis();
+		return timeInterval;
 		
 		//multiplying by 1000 allows conversion to milliseconds
-		return (System.currentTimeMillis() - timeStart) / (1000.0 * loopCount);
+		//return (System.currentTimeMillis() - timeStart) / (1000.0 * loopCount);
 	}
 
 	/**

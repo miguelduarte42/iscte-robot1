@@ -14,6 +14,7 @@ public class GyroHandler {
 	private double offset;
 	private double angle;
 	private double speed;
+	private long lastTime;
 	
 	/**
 	 * Initializes and calibrates the GyroSensor
@@ -26,7 +27,7 @@ public class GyroHandler {
 		this.offset = 0;
 		this.angle = 0;
 		this.speed = 0;
-		
+		this.lastTime =  System.currentTimeMillis();
 		if(autoCalibration)
 			calibrate();
 		
@@ -42,12 +43,24 @@ public class GyroHandler {
 	 * @param timeInterval		how much time has passed since the last reading
 	 */
 	public void readValues(double timeInterval){
-		
-		double gyroCurrentValue = gyroSensor.readValue();
-		
-		offset = offset*0.9995 + gyroCurrentValue*0.0005;
-		speed = gyroCurrentValue - offset;
-		angle = (angle + timeInterval*speed)*0.99 + angle*0.01;
+		timeInterval = 	(System.currentTimeMillis()-this.lastTime) / 1000.0;
+		this.lastTime =  System.currentTimeMillis();
+
+		double gyroRead = 0;
+		for (int i = 1; i <= 10; i++){
+			double gyroCurrentValue = gyroSensor.readValue();
+			gyroRead += gyroCurrentValue;
+		}
+		gyroRead /= 10.0;
+		speed = gyroRead - offset;
+		offset = offset * 0.9995 + gyroRead * 0.0005;
+		angle = (angle + timeInterval*speed)*0.9995; // + angle*0.01;
+
+		LCD.drawString("Gyro  : " + gyroRead + "  ", 0, 3);
+		LCD.drawString("Offset: " + offset + "  ", 0, 4);
+		LCD.drawString("Speed : " + speed + "  ", 0, 5);
+		LCD.drawString("Angle : " + angle + "  ", 0, 6);
+		LCD.drawString("dTime : " + timeInterval * 1000 + "ms", 0, 7);
 
 	}
 	/**
@@ -67,21 +80,25 @@ public class GyroHandler {
 		LCD.drawString("Calibration...",0,0);
 		
 		double cumulator = 0;
-		double loops = 200.0; //double (not int) because of the division
+		double loops = 500.0; //double (not int) because of the division
 		
-		for(int i = 0 ; i < loops ; i++) {
+		for(int i = 1 ; i <= loops ; i++) {
 			
-			cumulator+=gyroSensor.readValue();
-			
+			int gyroCurrentValue = gyroSensor.readValue();
+			cumulator+=gyroCurrentValue;
+			LCD.drawString("ReadValue: " + gyroCurrentValue, 0, 3);
+			LCD.drawString("Cumulator: " + cumulator, 0, 4);
+			LCD.drawString("Average: " + (cumulator / i), 0, 5);
 			Thread.sleep(10);
 		}
 		this.angle = 0;
 		this.offset = cumulator / loops;
 		
-		LCD.drawString("Calibrated at: " + offset,0,1);
+		LCD.drawString("OFFSET: " + offset,0,0);
 		
 		//warn that the calibration ended
 		Sound.twoBeeps();
+		this.lastTime =  System.currentTimeMillis();
 	}
 	
 	public double getAngle() {
