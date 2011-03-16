@@ -18,13 +18,16 @@ public class MotorHandler {
 	private Motor m1;
 	private Motor m2;
 	
-	private static double KGYROSPEED = 17; //Default: 1.15
-	private static double KGYROANGLE = 25.5; //Default: 7.5
+	private static double KGYROSPEED = 17; //17; //Default: 1.15
+	private static double KGYROANGLE = 25.5; //25.5; //Default: 7.5
 	private static double KPOS = 0.07;
 	private static double KSTEER = 1;
 	private static double KSPEED = 0.6;
 	private static double KDRIVE = -0.02;
 	private static double KWHEEL = 1; //the value for our wheels
+	private static int MAX_POWER = 900; //Max Power of each wheel 
+	
+	//private long lastTime = System.currentTimeMillis(); 
 	
 	public MotorHandler(Motor m1, Motor m2) {
 		this.m1 = m1;
@@ -37,6 +40,8 @@ public class MotorHandler {
 	 * @param timeInterval		the amount of time in seconds since the last reading
 	 */
 	public void readValues(double timeInterval) {
+		//timeInterval = 	(System.currentTimeMillis()-this.lastTime) / 1000.0;
+		//this.lastTime =  System.currentTimeMillis();
 		
 		double rotateLeft = m1.getTachoCount();
 		double rotateRight = m2.getTachoCount();
@@ -67,7 +72,7 @@ public class MotorHandler {
 	 */
 	public void updateWheelPower(double gyroSpeed, double gyroAngle, double timeInterval) {
 		
-		if(Math.abs(gyroSpeed) < 1)
+		if(Math.abs(gyroSpeed) < 1.5)
 			gyroSpeed = 0;
 		
 		double power = (KGYROSPEED * gyroSpeed + KGYROANGLE * gyroAngle) /KWHEEL +
@@ -90,9 +95,12 @@ public class MotorHandler {
 		
 		if(powerLeft > 0){
 			m1.forward();
-			m2.forward();
 		}else if(powerLeft < 0){
 			m1.backward();
+		}
+		if(powerRight > 0){
+			m2.forward();
+		}else if(powerRight < 0){
 			m2.backward();
 		}
 	}
@@ -102,7 +110,7 @@ public class MotorHandler {
 
         // Update the target motor difference based on the user steering
         // control value.
-        double motorControlSteer = 0;
+        double motorControlSteer = 10;
         motorDiffTarget += motorControlSteer * timeInterval;
 
         // Determine the proportionate power differential to be used based
@@ -112,9 +120,15 @@ public class MotorHandler {
 
         // Apply the power steering value with the main power value to
         // get the left and right power values.
-        powerLeft = power + powerSteer;
-        powerRight = power - powerSteer;
+        powerLeft = (power + powerSteer) * .995;
+        powerRight = (power + powerSteer) * .995;
+        if (powerLeft > MAX_POWER){
+        	powerLeft = MAX_POWER;}
+        else if (powerLeft < -MAX_POWER){
+        	powerLeft = -MAX_POWER;}
+        if (powerRight > MAX_POWER){
+        	powerRight = MAX_POWER;}
+        else if (powerRight < -MAX_POWER){
+        	powerRight = -MAX_POWER;}
       }
-
-
 }
