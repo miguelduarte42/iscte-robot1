@@ -23,8 +23,8 @@ public class SegwayRobot {
 		try {
 
 			this.gyroHandler = new GyroHandler(GYRO_SENSOR, true);
-
 			this.motorHandler = new MotorHandler(MOTOR_1, MOTOR_2);
+			new DisplayHandler();
 			//this.bluetoothHandler = new BluetoothHandler();
 
 			//createButtonListeners(); //Test function (to remove)
@@ -51,7 +51,6 @@ public class SegwayRobot {
 
 			timeInterval = calculateInterval(loopCount++);
 
-			gyroHandler.readValues(timeInterval);
 			motorHandler.readValues(timeInterval);
 
 			motorHandler.updateWheelPower(gyroHandler.getSpeed(),
@@ -71,12 +70,6 @@ public class SegwayRobot {
 	 * Finds the average time it takes for the main loop to process. This value
 	 * is useful to know how much time has passed since the last readings,
 	 * allowing estimations based on readings from the sensors.
-	 * 
-	 * Miguel - I think this shoudn't use the average time, we should change it
-	 * so that the actual time elapsed is used on the calculation. What's the benefit
-	 * of using and average over time? It produces slightly incorrect values and
-	 * is more complex to calculate because it has an additional multiplication and
-	 * division.
 	 * 
 	 * @param loopCount
 	 *            the current loop number on the main program

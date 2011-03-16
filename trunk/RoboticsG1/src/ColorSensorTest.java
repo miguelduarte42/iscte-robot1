@@ -2,7 +2,6 @@ import lejos.nxt.ColorLightSensor;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.robotics.Colors.Color;
-import lejos.util.Delay;
 
 
 public class ColorSensorTest {
@@ -11,35 +10,19 @@ public class ColorSensorTest {
 	
 	public void readColors(){
 		
-		color_sensor = new ColorLightSensor(SensorPort.S2, ColorLightSensor.TYPE_COLORFULL);
-		int i = 10000;
-		
-		color_sensor.setFloodlight(Color.WHITE);
+		color_sensor = new ColorLightSensor(SensorPort.S2, ColorLightSensor.TYPE_COLORRED);
 		color_sensor.calibrateHigh();
-		Delay.msDelay(10);
-
-		color_sensor.setFloodlight(Color.BLACK);
-		color_sensor.calibrateLow();
-		
 		color_sensor.setFloodlight(Color.RED);
-		color_sensor.setFloodlight(Color.BLUE);
-		color_sensor.setFloodlight(Color.GREEN);
-		color_sensor.setFloodlight(Color.WHITE);
 		
 		int lightValue; 
 		
-		while(i != 0){
-			color_sensor.setFloodlight(Color.RED);
-			color_sensor.setFloodlight(Color.BLUE);
-			color_sensor.setFloodlight(Color.GREEN);
-			color_sensor.setFloodlight(Color.WHITE);
-			lightValue = color_sensor.getLightValue();
-			LCD.drawString("Waiting for BT",0,0);
+		while(true){
+			lightValue = color_sensor.readValue();
+			
 			LCD.drawString("Light Value: " + lightValue, 0, 2);
-			LCD.drawString("Red:   " + color_sensor.getRedComponent(), 0, 3);
-			LCD.drawString("Green: " + color_sensor.getGreenComponent(), 0, 4);
-			LCD.drawString("Blue:  " + color_sensor.getBlueComponent(), 0, 5);
-			i--;
+			//LCD.drawString("Red:   " + color_sensor.getRedComponent(), 0, 3);
+			//LCD.drawString("Green: " + color_sensor.getGreenComponent(), 0, 4);
+			//LCD.drawString("Blue:  " + color_sensor.getBlueComponent(), 0, 5);
 		}
 		
 		
