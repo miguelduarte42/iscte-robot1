@@ -12,8 +12,8 @@ public class MotorHandler {
 	private double motorDiff = 0;
 	private double motorDiffTarget = 0;
 	
-	private double powerLeft = 0;
-	private double powerRight = 0;
+	public double powerLeft = 0;
+	public double powerRight = 0;
 	
 	private Motor m1;
 	private Motor m2;
@@ -25,13 +25,16 @@ public class MotorHandler {
 	private static double KSPEED = 0.6;
 	private static double KDRIVE = -0.02;
 	private static double KWHEEL = 1; //the value for our wheels
-	private static int MAX_POWER = 900; //Max Power of each wheel 
+	private static int MAX_POWER = 900; //Max Power of each wheel
+	
+	public static MotorHandler instance;
 	
 	//private long lastTime = System.currentTimeMillis(); 
 	
 	public MotorHandler(Motor m1, Motor m2) {
 		this.m1 = m1;
 		this.m2 = m2;
+		instance = this;
 	}
 	
 	/**
@@ -82,8 +85,6 @@ public class MotorHandler {
 		
 		SteerControl(power,timeInterval);
 		//System.out.println(gyroAngle);
-		LCD.drawString("PL:"+powerLeft, 0, 1);
-		LCD.drawString("PR:"+powerRight, 0, 2);
 		
 		m1.setSpeed(Math.abs((int)powerLeft));
 		m2.setSpeed(Math.abs((int)powerRight));

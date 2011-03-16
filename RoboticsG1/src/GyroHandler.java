@@ -8,13 +8,17 @@ import lejos.nxt.addon.GyroSensor;
  * Gyroscope Sensor. Besides reading the values from the sensor itself,
  * it 
  */
-public class GyroHandler {
+public class GyroHandler extends Thread{
 	
 	private GyroSensor gyroSensor;
-	private double offset;
-	private double angle;
-	private double speed;
+	public double offset;
+	public double angle;
+	public double speed;
 	private long lastTime;
+	public double timeInterval;
+	public double gyroRead;
+	
+	public static GyroHandler instance;
 	
 	/**
 	 * Initializes and calibrates the GyroSensor
@@ -28,9 +32,18 @@ public class GyroHandler {
 		this.angle = 0;
 		this.speed = 0;
 		this.lastTime =  System.currentTimeMillis();
+		
+		instance = this;
+		
 		if(autoCalibration)
 			calibrate();
 		
+		start();
+	}	
+	
+	public void run(){
+		while(true)
+			readValues();
 	}
 	
 	/**
@@ -42,25 +55,26 @@ public class GyroHandler {
 	 * 
 	 * @param timeInterval		how much time has passed since the last reading
 	 */
-	public void readValues(double timeInterval){
+	public void readValues(){
 		timeInterval = 	(System.currentTimeMillis()-this.lastTime) / 1000.0;
-		this.lastTime =  System.currentTimeMillis();
+		lastTime =  System.currentTimeMillis();
 
-		double gyroRead = 0;
+		double gyroReadTemp = 0;
 		for (int i = 1; i <= 10; i++){
 			double gyroCurrentValue = gyroSensor.readValue();
-			gyroRead += gyroCurrentValue;
+			gyroReadTemp += gyroCurrentValue;
+			
+			try{
+				Thread.sleep(1);
+			}catch(Exception e){}
 		}
-		gyroRead /= 10.0;
+		
+		gyroRead = gyroReadTemp / 10.0;
 		speed = gyroRead - offset;
 		offset = offset * 0.9995 + gyroRead * 0.0005;
-		angle = (angle + timeInterval*speed)*0.9995; // + angle*0.01;
-
-		LCD.drawString("Gyro  : " + gyroRead + "  ", 0, 3);
-		LCD.drawString("Offset: " + offset + "  ", 0, 4);
-		LCD.drawString("Speed : " + speed + "  ", 0, 5);
-		LCD.drawString("Angle : " + angle + "  ", 0, 6);
-		LCD.drawString("dTime : " + timeInterval * 1000 + "ms", 0, 7);
+		if(Math.abs(speed) < 2)
+			speed = 0;
+		angle = (angle + timeInterval*speed);//*0.999995; // + angle*0.01;
 
 	}
 	/**
@@ -89,7 +103,6 @@ public class GyroHandler {
 			LCD.drawString("ReadValue: " + gyroCurrentValue, 0, 3);
 			LCD.drawString("Cumulator: " + cumulator, 0, 4);
 			LCD.drawString("Average: " + (cumulator / i), 0, 5);
-			Thread.sleep(10);
 		}
 		this.angle = 0;
 		this.offset = cumulator / loops;
