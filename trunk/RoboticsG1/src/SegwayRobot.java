@@ -23,8 +23,8 @@ public class SegwayRobot {
 
 		try {
 
-			new GyroHandler(GYRO_SENSOR, true,true);
-			new GyroHandler(GYRO_SENSOR2, true,false);
+			new GyroHandler(GYRO_SENSOR, true, true);
+			new GyroHandler(GYRO_SENSOR2, true, false);
 			this.motorHandler = new MotorHandler(MOTOR_1, MOTOR_2);
 			new DisplayHandler();
 			//this.bluetoothHandler = new BluetoothHandler();
