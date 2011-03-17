@@ -8,6 +8,7 @@ public class SegwayRobot {
 	private static final Motor MOTOR_1 = Motor.A;
 	private static final Motor MOTOR_2 = Motor.C;
 	private static final SensorPort GYRO_SENSOR = SensorPort.S3;
+	private static final SensorPort GYRO_SENSOR2 = SensorPort.S2;
 	private static final double WAIT_TIME = 0.01;
 
 	private GyroHandler gyroHandler;
@@ -22,7 +23,8 @@ public class SegwayRobot {
 
 		try {
 
-			this.gyroHandler = new GyroHandler(GYRO_SENSOR, true);
+			new GyroHandler(GYRO_SENSOR, true,true);
+			new GyroHandler(GYRO_SENSOR2, true,false);
 			this.motorHandler = new MotorHandler(MOTOR_1, MOTOR_2);
 			new DisplayHandler();
 			//this.bluetoothHandler = new BluetoothHandler();
