@@ -28,7 +28,7 @@ public class GyroHandler extends Thread{
 	 * @param port				The physical port for the GyroSensor on the robot
 	 * @param autoCalibration	Indicates whether to automatically calibrate the sensor
 	 */
-	public GyroHandler(SensorPort port,SensorPort port2, boolean autoCalibration, boolean inverted) throws Exception{
+	public GyroHandler(SensorPort port,boolean autoCalibration, boolean inverted) throws Exception{
 		
 		gyroSensor = new GyroSensor(port);
 		this.inverted = inverted;
