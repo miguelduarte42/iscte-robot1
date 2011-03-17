@@ -17,8 +17,10 @@ public class GyroHandler extends Thread{
 	private long lastTime;
 	public double timeInterval;
 	public double gyroRead;
+	private boolean inverted;
 	
 	public static GyroHandler instance;
+	public static GyroHandler instance2;
 	
 	/**
 	 * Initializes and calibrates the GyroSensor
@@ -26,14 +28,19 @@ public class GyroHandler extends Thread{
 	 * @param port				The physical port for the GyroSensor on the robot
 	 * @param autoCalibration	Indicates whether to automatically calibrate the sensor
 	 */
-	public GyroHandler(SensorPort port, boolean autoCalibration) throws Exception{
+	public GyroHandler(SensorPort port,SensorPort port2, boolean autoCalibration, boolean inverted) throws Exception{
+		
 		gyroSensor = new GyroSensor(port);
+		this.inverted = inverted;
 		this.offset = 0;
 		this.angle = 0;
 		this.speed = 0;
 		this.lastTime =  System.currentTimeMillis();
 		
-		instance = this;
+		if(inverted)
+			instance = this;
+		else
+			instance2 = this;
 		
 		if(autoCalibration)
 			calibrate();
@@ -71,6 +78,7 @@ public class GyroHandler extends Thread{
 		
 		gyroRead = gyroReadTemp / 10.0;
 		speed = gyroRead - offset;
+		if(inverted) speed*=-1;
 		offset = offset * 0.9995 + gyroRead * 0.0005;
 		if(Math.abs(speed) < 2)
 			speed = 0;
