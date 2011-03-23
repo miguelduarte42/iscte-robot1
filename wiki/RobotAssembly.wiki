@@ -12,7 +12,7 @@ Motor Ports:
   * Port *C*: Motor Right
 
 Sensor Ports:
-  * Sensor *1*: UltraSound
+  * Sensor *1*: GyroSensor Left (1)
   * Sensor *2*: ColorSensor
-  * Sensor *3*: GyroSensor Left (1)
+  * Sensor *3*: UltraSound
   * Sensor *4*: Gyrosensor Right (2)
