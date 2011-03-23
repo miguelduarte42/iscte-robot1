@@ -34,28 +34,28 @@ class GELway extends Thread
     */
    public static void loadMaster() {
       LCD.drawString("Waiting...", 2, 1);
-      BTConnection conn = Bluetooth.waitForConnection();
-      conn.setIOMode(0); // Used when a pc connection is made
+      //BTConnection conn = Bluetooth.waitForConnection();
+      //conn.setIOMode(0); // Used when a pc connection is made
       // conn.setIOMode(NXTConnection.RAW); // Used when a phone connection is made
       LCD.clear();
       // Start Bluetooth reader thread
-      br = new BluetoothReader(conn);
-      br.start();
-      connectMasterSlave();
+      //br = new BluetoothReader(conn);
+      //br.start();
+      //connectMasterSlave();
       // Start Balance control thread
       BalanceController bc = new BalanceController(ctrl);
       bc.start();
-      Behavior b1 = new GELwayDriver(ctrl, br); // Needed to drive robot and slave
-      Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
-      Behavior[] bArray = { b1, b2 };
-      Arbitrator arby = new Arbitrator(bArray);
-      arby.start();
+      //Behavior b1 = new GELwayDriver(ctrl, br); // Needed to drive robot and slave
+      //Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
+      //Behavior[] bArray = { b1, b2 };
+      //Arbitrator arby = new Arbitrator(bArray);
+      //arby.start();
    }
    /**
     * Loads the slave setting for the robot. Has the follower behaviour to keep GELway at a
     * set distance
     */
-   public static void loadSlave() {
+   /*public static void loadSlave() {
       LCD.drawString("Waiting...", 2, 1);
       BTConnection conn = Bluetooth.waitForConnection();
       conn.setIOMode(0); // Used when a pc connection is made
@@ -73,18 +73,16 @@ class GELway extends Thread
       Behavior[] bArray = { b1 };
       Arbitrator arby = new Arbitrator(bArray);
       arby.start();
-   }
+   }*/
    /**
     * Loads operator settings for GELway when only one robot is used
     */
    public static void loadNormal() {
-      LCD.drawString("Waiting...", 2, 1);
-      BTConnection conn = Bluetooth.waitForConnection();
-      conn.setIOMode(0); // Used when a pc connection is made
-      // conn.setIOMode(NXTConnection.RAW); // Used when a phone connection is made
+      //LCD.drawString("Waiting...", 2, 1);
+      //conn.setIOMode(NXTConnection.RAW); // Used when a phone connection is made
       LCD.clear();
-      // Start Bluetooth reader thread
-      br = new BluetoothReader(conn);
+      //Start Bluetooth reader thread
+      br = new BluetoothReader();
       br.start();
       // Start Balance control thread
       // BalanceController bc = new BalanceController(ctrl);
@@ -93,21 +91,19 @@ class GELway extends Thread
       LCD.clear();
       Behavior b1 = new GELwayDriver(ctrl, br); // Needed to drive robot and slave
       // Behavior b1 = new GELwayFollower(ctrl);
-      // Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
+      //Behavior b2 = new DetectObstacle(ctrl); // Needed to avoid obstacles
       // Behavior b3 = new KeepStraight(ctrl); // Needed to keep straight
-      // Behavior[] bArray = { b1, b2 };
-      Behavior[] bArray = { b1};
+      Behavior[] bArray = { b1 };
       Arbitrator arby = new Arbitrator(bArray);
       arby.start();
    }
    /**
     * This method is used to connect the Master GELway to the Slave GELway.
     */
-   public static void connectMasterSlave() {
+  /* public static void connectMasterSlave() {
       LCD.drawString("Master Connected", 0, 4);
       LCD.drawString("Press Enter to", 1, 6);
       LCD.drawString("Connect Slave", 2, 7);
-      //try {Button.ENTER.waitForPressAndRelease();} catch (InterruptedException e1) {}
       try {Button.ENTER.waitForPressAndRelease();} catch (Exception e1) {}
       LCD.clear();
       String name = "GELwayJR";
@@ -135,5 +131,5 @@ class GELway extends Thread
       LCD.refresh();
       slave = new BluetoothReader(btc);
       slave.start();
-   }
+   }*/
 }

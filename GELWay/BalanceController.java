@@ -1,5 +1,5 @@
 import lejos.nxt.*;
-//*** import lejos.nxt.addon.EOPD;
+import lejos.nxt.addon.EOPD;
 import lejos.util.Datalogger;
 /**
  * This class contains the parameters needed to keep the GELway balanced. It contains a PID
@@ -16,7 +16,7 @@ public class BalanceController extends Thread
    private final double Kp = 1.2;
    private final double Ki = 0.25;
    private final double Kd = 0.1;
-   private final int eopdThresh = 98; // [NCA] Changed to use normalized color sensor readings
+   private final int eopdThresh = 1022;
    double num = 0.0;
    int startLog = 0;
    static double damp = 0.1;
@@ -44,7 +44,7 @@ public class BalanceController extends Thread
    public BalanceController(CtrlParam ctrl)
    {
       this.ctrl = ctrl;
-      setDaemon(true);
+      //setDaemon(true);
    }
 
    /**
@@ -61,7 +61,7 @@ public class BalanceController extends Thread
       while (true) {
          // Start balancing provided GELway is upright and the EOPD sensor can sense the
          // ground
-         while (eopd.readRawValue() < eopdThresh && upright) {
+         while (/*eopd.readRawValue() < eopdThresh &&*/ upright) {
             ctrl.setUpright(true);
             runDriveState();
             double Psi = gyro.getAngle();
@@ -82,7 +82,7 @@ public class BalanceController extends Thread
             motors.setPower(pw + ctrl.leftMotorOffset(), pw + ctrl.rightMotorOffset());
             // Delay used to stop Gyro being read to quickly. May need to be increase or
             // decreased depending on leJOS version.
-            delay(6);
+            delay(10);
          }
          startLog = 0;
          motors.stop();
