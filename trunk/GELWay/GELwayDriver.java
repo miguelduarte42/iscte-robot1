@@ -1,5 +1,4 @@
 import lejos.robotics.subsumption.*;
-//import lejos.robotics.subsumption.Behavior;
 import lejos.nxt.*;
 
 /**
@@ -17,7 +16,7 @@ public class GELwayDriver implements Behavior
    private static final int directionRight = 6; // right
    private static final int directionForward = 2; // up
    private static final int directionBackward = 8; // down
-   private static final int holdPosition = 5; // down
+   private static final int holdPosition = 5; // stay
 
    BluetoothReader br;
    MotorDirection mv;

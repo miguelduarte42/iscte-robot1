@@ -1,8 +1,8 @@
-import lejos.robotics.subsumption.Behavior;
+import lejos.robotics.subsumption.*;
 import lejos.nxt.*;
 
 /**
- * A behavior which allows the GELway to avoid obstacles using the Ultrasonic Sensor.
+ * A behaviour which allows the GELway to avoid obstacles using the Ultrasonic Sensor.
  * 
  * @author Steven Jan Witzand
  * @version August 2009
@@ -26,7 +26,7 @@ public class DetectObstacle implements Behavior
    }
 
    /**
-    * Trigger for the Behavior. This trigger is actioned when a distance less than 25cm is
+    * Trigger for the Behaviour. This trigger is actioned when a distance less than 25cm is
     * detected.
     */
    public boolean takeControl()

@@ -11,37 +11,29 @@ public class BluetoothReader extends Thread
    DataInputStream istream;
    DataOutputStream ostream;
    private int dir;
-   private boolean newDir = true;
-   /**
-    * BluetoothReader constructor.
-    * 
-    * @param conn The Bluetooth Connection set up with the GELway
-    */
-   public BluetoothReader(BTConnection conn)
-   {
-      istream = conn.openDataInputStream();
-      ostream = conn.openDataOutputStream();
-   }
+   private boolean newDir = false;
    /**
     * BluetoothReader thread which constantly runs waiting for new commands
     */
    public void run()
    {
+	  BTConnection conn = Bluetooth.waitForConnection();
+	  conn.setIOMode(0); // Used when a pc connection is made
+	  istream = conn.openDataInputStream();
+	  ostream = conn.openDataOutputStream();
       dir = 0;
       while (true) {
-         while (true) {
-            try {
-               newDir = false;
-               dir = istream.readInt();
-               newDir = true;
-               try {Thread.sleep(100);} catch (InterruptedException e) {}
-               if (dir == -1) break;
-            } catch (IOException e) {}
-         }
+    	  try {
+    		  newDir = false;
+    		  dir = istream.readInt();
+    		  newDir = true;
+    		  try {Thread.sleep(100);} catch (InterruptedException e) {}
+    		  if (dir == -1) break;
+    	  } catch (IOException e) {}
       }
    }
    /**
-    * Reutrns the current commands send over Bluetooth
+    * Returns the current commands send over Bluetooth
     * @return the current command sent over Bluetooth
     */
    public int getDir() { return dir;}

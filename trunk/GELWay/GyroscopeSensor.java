@@ -1,31 +1,34 @@
-/* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-import lejos.nxt.*;
-import lejos.util.Delay;
+import lejos.nxt.ADSensorPort;
+import lejos.nxt.Button;
+import lejos.nxt.LCD;
+import lejos.nxt.SensorConstants;
 
 /**
- * This class is designed to work with the HiTechnic Gyrosensor. It has methods to calculate
- * the gyro offset, and find the gyro's angle and velocity. It has been modified by the
- * original programmers Bent Bisballe Nyeng, Kasper Sohn and Johnny Rieper
- * 
- * @author Steven Jan Witzand
- * @version August 2009
- */
+* This class is designed to work with the HiTechnic Gyrosensor. It has methods to calculate
+* the gyro offset, and find the gyro's angle and velocity. It has been modified by the
+* original programmers Bent Bisballe Nyeng, Kasper Sohn and Johnny Rieper
+* 
+* @author Steven Jan Witzand
+* @version August 2009
+*/
 public class GyroscopeSensor
 {
-   private SensorPort port;
+   private ADSensorPort port;
    private double angle = 0.0;
    private int lastGetAngleTime = 0;
    private double lastOffset = 0;
    private final double a = 0.999999;// Weight of older offset values.
-
+   
    /**
     * The GyroscopeSensor constructor.
     * 
     * @param port The NXT Sensor port the gyro sensor is connected to.
     */
-   public GyroscopeSensor(SensorPort port)
+   public GyroscopeSensor(ADSensorPort port)
    {
       this.port = port;
+      
+      this.port.setTypeAndMode(SensorConstants.TYPE_CUSTOM, SensorConstants.MODE_RAW);
       calcOffset();
    }
 
@@ -37,17 +40,19 @@ public class GyroscopeSensor
    {
       lastOffset = 0;
       double offsetTotal = 0;
-      LCD.drawString("Calibrating Gyro", 0, 2);
+      LCD.drawString("Calibrando Gyro", 0, 2);
       for (int i = 0; i < 50; i++) {
-          LCD.drawString("N: " + i, 0, 3);
-         offsetTotal += (double) port.readValue();
-         Delay.msDelay(4);
+        offsetTotal += (double) port.readRawValue();
+         try {
+            Thread.sleep(4);
+         } catch (InterruptedException e) {
+         }
       }
       while (!Button.ENTER.isPressed()) {
          lastOffset = Math.ceil(offsetTotal / 50) + 1;
-         LCD.drawString("Calibration Done", 0, 4);
-         LCD.drawString("offset: " + lastOffset, 2, 5);
-         LCD.drawString("Press Enter", 1, 6);
+         LCD.drawString("Calibration OK", 0, 4);
+         LCD.drawString("OFFSET: " + lastOffset, 2, 5);
+         LCD.drawString("Push Enter!", 1, 6);
       }
       try {
          Thread.sleep(500);
@@ -63,7 +68,7 @@ public class GyroscopeSensor
     */
    private double getAngleOffset()
    {
-      double offset = lastOffset * a + (1.0 - a) * (double) port.readValue();
+      double offset = lastOffset * a + (1.0 - a) * (double) port.readRawValue();
       lastOffset = offset;
       return offset;
    }
@@ -77,7 +82,7 @@ public class GyroscopeSensor
    public double getAngleVelocity()
    {
       double offset = getAngleOffset();
-      return (double) port.readValue() - offset;
+      return (double) port.readRawValue() - offset;
    }
 
    /**

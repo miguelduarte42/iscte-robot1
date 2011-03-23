@@ -94,8 +94,8 @@ class MotorController
     */
    public double getAngleVelocity()
    {
-      return ((double) leftMotor.getSpeed() + 
-            (double) rightMotor.getSpeed()) / 2.0;
+      return ((double) leftMotor.getRotationSpeed() + 
+            (double) leftMotor.getRotationSpeed()) / 2.0;
    }
 
    /**
