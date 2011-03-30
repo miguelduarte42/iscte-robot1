@@ -1,5 +1,6 @@
+package old;
 import lejos.nxt.*;
-import lejos.nxt.addon.EOPD;
+//*** import lejos.nxt.addon.EOPD;
 import lejos.util.Datalogger;
 /**
  * This class contains the parameters needed to keep the GELway balanced. It contains a PID
@@ -25,19 +26,15 @@ public class BalanceController extends Thread
    private static final int backwards = 2; // down
    static boolean upright = true;
    // Teseing error contributions.
-   private final double K_psi = 45.257035; // Gyro angle weight
-   private final double K_phi = 0.806876; // Motor angle weight
-   private final double K_psidot = 0.620882; // Gyro angle velocity weight
-   private final double K_phidot = 0.039711;// Motor angle velocity weight
-   /*private final double K_psi = 44.257035; // Gyro angle weight
-   private final double K_phi = 0.806876; // Motor angle weight
-   private final double K_psidot = 0.620882; // Gyro angle velocity weight
-   private final double K_phidot = 0.039711;// Motor angle velocity weight */
+   //private final double K_psi = 44.257035; // Gyro angle weight 44.257...
+   //private final double K_phi = 0.806876; // Motor angle weight
+   //private final double K_psidot = 0.620882; // Gyro angle velocity weight
+   //private final double K_phidot = 0.039711;// Motor angle velocity weight
    // Original Balance numbers
-   // private final double K_psi = 34.189581; // Gyro angle weight
-   // private final double K_phi = 0.835082; // Motor angle weight
-   // private final double K_psidot = 0.646772; // Gyro angle velocity weight
-   // private final double K_phidot = 0.028141; // Motor angle velocity weight
+   private final double K_psi = 15.189581; // Gyro angle weight
+   private final double K_phi = 0.835082; // Motor angle weight
+   private final double K_psidot = 0.646772; // Gyro angle velocity weight
+   private final double K_phidot = 0.028141; // Motor angle velocity weight
    private static CtrlParam ctrl;
    public boolean offsetDone = false;
    /**
@@ -57,8 +54,7 @@ public class BalanceController extends Thread
    public void run()
    {
       MotorController motors = new MotorController(Motor.C, Motor.A);
-      GyroscopeSensor gyro = new GyroscopeSensor(SensorPort.S1);
-      Odometer odometer = new Odometer();
+      GyroscopeSensor gyro = new GyroscopeSensor(SensorPort.S3);
       EOPD eopd = new EOPD(SensorPort.S2);
       eopd.setModeLong();
       double int_error = 0.0;
@@ -66,7 +62,8 @@ public class BalanceController extends Thread
       while (true) {
          // Start balancing provided GELway is upright and the EOPD sensor can sense the
          // ground
-         while (/*eopd.readRawValue() < eopdThresh &&*/ upright) {
+    	  ctrl.setDriveState(stationary);
+         while (eopd.readRawValue() < eopdThresh && upright) {
             ctrl.setUpright(true);
             runDriveState();
             double Psi = gyro.getAngle();
@@ -74,6 +71,14 @@ public class BalanceController extends Thread
             // ctrl.tiltAngle() is used to drive the robot forwards and backwards
             double Phi = motors.getAngle() - ctrl.tiltAngle();
             double PhiDot = motors.getAngleVelocity();
+            
+            //Phi*=0;
+            //PhiDot*=0;
+            
+            LCD.drawString(""+Psi, 0, 0);
+            LCD.drawString(""+PsiDot, 0, 1);
+            LCD.drawString(""+Phi, 0, 2);
+            LCD.drawString(""+PhiDot, 0, 3);
             // Proportional Error
             double error = Psi * K_psi + Phi * K_phi + PsiDot * K_psidot + PhiDot
                   * K_phidot;
@@ -87,8 +92,7 @@ public class BalanceController extends Thread
             motors.setPower(pw + ctrl.leftMotorOffset(), pw + ctrl.rightMotorOffset());
             // Delay used to stop Gyro being read to quickly. May need to be increase or
             // decreased depending on leJOS version.
-            odometer.nextTacho(motors.leftMotor.getTachoCount(), motors.rightMotor.getTachoCount());
-            delay(10);
+            delay(6);
          }
          startLog = 0;
          motors.stop();

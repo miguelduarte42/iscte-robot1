@@ -21,6 +21,9 @@ public class BluetoothReader extends Thread
 	  conn.setIOMode(0); // Used when a pc connection is made
 	  istream = conn.openDataInputStream();
 	  ostream = conn.openDataOutputStream();
+	  
+	  new BluetoothSender(ostream).start();
+	  
       dir = 0;
       while (true) {
     	  try {
@@ -56,4 +59,36 @@ public class BluetoothReader extends Thread
          ostream.flush();
       } catch (IOException e) {}
    }
+}
+
+class BluetoothSender extends Thread{
+	
+	DataOutputStream ostream;
+	
+	public BluetoothSender(DataOutputStream ostream) {
+		this.ostream = ostream;
+	}
+	
+	public void run(){
+		try{
+			while(true){
+				
+				Odometer od = Odometer.instance;
+				
+				if(od != null){
+			         ostream.writeDouble(od.x);
+			         ostream.writeDouble(od.y);
+			         ostream.writeDouble(od.orientation);
+			         ostream.writeLong(System.currentTimeMillis());
+			         ostream.writeDouble(od.prevLeftTacho);
+			         ostream.writeDouble(od.prevRightTacho);
+			         ostream.writeDouble(od.sL);
+			         ostream.writeDouble(od.sR);
+			         ostream.flush();
+				}
+				Thread.sleep(20);
+			}
+			
+		}catch(Exception e){}
+	}
 }
