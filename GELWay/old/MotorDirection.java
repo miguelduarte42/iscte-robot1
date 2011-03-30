@@ -1,3 +1,4 @@
+package old;
 /**
  * A class which handles controlling the GELway directional movements. Works by altering
  * parameters in the CtrlParam class which are called by the BalanceController thread.
@@ -94,7 +95,6 @@ public class MotorDirection
       ctrl.setLeftMotorOffset(-turnPower);
       ctrl.setRightMotorOffset(turnPower);
       delay(period);
-      
    }
 
    /**

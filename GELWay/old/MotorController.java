@@ -1,3 +1,4 @@
+package old;
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 import lejos.nxt.*;
 
@@ -12,8 +13,8 @@ import lejos.nxt.*;
 class MotorController
 {
 
-   public Motor leftMotor;
-   public Motor rightMotor;
+   private Motor leftMotor;
+   private Motor rightMotor;
    // Sinusoidal parameters used to smooth motors
    private double sin_x = 0.0;
    private final double sin_speed = 0.1;
@@ -56,6 +57,9 @@ class MotorController
       int pwl = (int) (leftPower + Math.sin(sin_x) * sin_amp);
       int pwr = (int) (rightPower - Math.sin(sin_x) * sin_amp);
 
+      if(pwl > 900) pwl = 900;
+      if(pwl < -900) pwl = -900;
+      
       leftMotor.setSpeed(pwl);
       if (pwl < 0) {
          leftMotor.backward();
@@ -64,6 +68,9 @@ class MotorController
       } else {
          leftMotor.stop();
       }
+      
+      if(pwr > 900) pwr = 900;
+      if(pwr < -900) pwr = -900;
 
       rightMotor.setSpeed(pwr);
       if (pwr < 0) {
@@ -82,8 +89,8 @@ class MotorController
     */
    public double getAngle()
    {
-      return ((double) leftMotor.getTachoCount() + 
-            (double) rightMotor.getTachoCount()) / 2.0;
+      return (((double) leftMotor.getTachoCount() + 
+            (double) rightMotor.getTachoCount()) / 2.0);
    }
 
    /**
@@ -95,7 +102,7 @@ class MotorController
    public double getAngleVelocity()
    {
       return ((double) leftMotor.getRotationSpeed() + 
-            (double) leftMotor.getRotationSpeed()) / 2.0;
+            (double) rightMotor.getRotationSpeed()) / 2.0;
    }
 
    /**
