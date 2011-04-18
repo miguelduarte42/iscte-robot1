@@ -32,7 +32,8 @@ public class CommandHandler {
 				break;
 			case BACKWARD:
 				System.out.println("Backward");
-				left = right = -360;
+				left = 360;
+				right = 300;
 				break;
 			case LEFT:
 				System.out.println("Left");

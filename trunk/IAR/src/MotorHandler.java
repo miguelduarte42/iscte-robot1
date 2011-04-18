@@ -43,4 +43,12 @@ public class MotorHandler {
 		else if(s < 0) m.backward();
 		else m.stop();
 	}
+	
+	public int getRightTacho(){
+		return motorRight.getTachoCount();
+	}
+	
+	public int getLeftTacho(){
+		return motorLeft.getTachoCount();
+	}
 }
