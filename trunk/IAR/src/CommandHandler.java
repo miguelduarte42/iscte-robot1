@@ -27,26 +27,21 @@ public class CommandHandler {
 		
 		switch(command){
 			case FORWARD:
-				System.out.println("Forward");
 				left = right = 360;
 				break;
 			case BACKWARD:
-				System.out.println("Backward");
-				left = 360;
-				right = 300;
+				left = -360;
+				right = -360;
 				break;
 			case LEFT:
-				System.out.println("Left");
-				left = -360;
+				left = 50;
 				right = 360;
 				break;
 			case RIGHT:
-				System.out.println("Right");
 				left = 360;
-				right = -360;
+				right = 50;
 				break;
 			case STOP:
-				System.out.println("Stop");
 				break;
 		}
 		
