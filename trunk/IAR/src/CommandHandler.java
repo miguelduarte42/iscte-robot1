@@ -10,30 +10,45 @@ public class CommandHandler {
 	
 	private static CommandHandler INSTANCE;
 	
-	public CommandHandler() {
-		// TODO Auto-generated constructor stub
+	private CommandHandler() {
+		
+	}
+	
+	public static CommandHandler getInstance(){
+		if(INSTANCE == null)
+			INSTANCE = new CommandHandler();
+		return INSTANCE;
 	}
 	
 	
 	public void execute(int command){
 		
+		int left = 0, right = 0;
+		
 		switch(command){
 			case FORWARD:
 				System.out.println("Forward");
+				left = right = 360;
 				break;
 			case BACKWARD:
 				System.out.println("Backward");
+				left = right = -360;
 				break;
 			case LEFT:
 				System.out.println("Left");
+				left = -360;
+				right = 360;
 				break;
 			case RIGHT:
 				System.out.println("Right");
+				left = 360;
+				right = -360;
 				break;
 			case STOP:
 				System.out.println("Stop");
 				break;
 		}
+		
+		MotorHandler.getInstance().changeSpeed(left, right);
 	}
-
 }
