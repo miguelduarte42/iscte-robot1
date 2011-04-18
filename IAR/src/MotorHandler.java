@@ -9,6 +9,18 @@ public class MotorHandler {
 	private Motor motorRight = new Motor(PORT_MOTOR_RIGHT);
 	private int speedLeft = 0;
 	private int speedRight = 0;
+	private static MotorHandler INSTANCE;
+	
+	
+	private MotorHandler(){
+		
+	}
+	
+	public static MotorHandler getInstance(){
+		if(INSTANCE == null)
+			INSTANCE = new MotorHandler();
+		return INSTANCE;
+	}
 	
 	public void changeSpeed(int left, int right) {
 		
@@ -19,10 +31,8 @@ public class MotorHandler {
 	}
 	
 	private void applySpeedToWheels() {
-		
 		applySpeedToSingleWheel(motorLeft,speedLeft);
 		applySpeedToSingleWheel(motorRight,speedRight);
-		
 	}
 	
 	private void applySpeedToSingleWheel(Motor m, int s){
@@ -32,6 +42,5 @@ public class MotorHandler {
 		if(s > 0) m.forward();
 		else if(s < 0) m.backward();
 		else m.stop();
-		
 	}
 }

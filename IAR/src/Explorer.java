@@ -3,8 +3,8 @@ public class Explorer {
 	
 	public Explorer() {
 		
-		CommandHandler commandHandler = new CommandHandler();
-		BluetoothHandler bluetoothHandler = new BluetoothHandler(commandHandler);
+		CommandHandler commandHandler = CommandHandler.getInstance();
+		BluetoothHandler bluetoothHandler = new BluetoothHandler();
 		
 		
 		while(true){

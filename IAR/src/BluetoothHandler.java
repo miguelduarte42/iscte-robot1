@@ -8,11 +8,10 @@ public class BluetoothHandler extends Thread
 {
    private DataInputStream istream;
    private DataOutputStream ostream;
-   private CommandHandler commandHandler;
+  
    private int input;
    
-   public BluetoothHandler(CommandHandler ch) {
-	   this.commandHandler = ch;
+   public BluetoothHandler() {
 	   start();
    }
 
@@ -29,7 +28,7 @@ public class BluetoothHandler extends Thread
 	  try{
 		  while (true){
     		  input = istream.readInt();
-    		  commandHandler.execute(input);
+    		  CommandHandler.getInstance().execute(input);
 		  }
 	  }catch(Exception e){}
    }
