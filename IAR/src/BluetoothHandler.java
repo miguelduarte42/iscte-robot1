@@ -50,6 +50,7 @@ public class BluetoothHandler extends Thread
 class BluetoothSender extends Thread{
 
 	private DataOutputStream ostream;
+	private Map map = Map.getInstance();
 	private static int SEND_WAIT = 100;
 
 	public BluetoothSender(DataOutputStream ostream) {
@@ -57,12 +58,14 @@ class BluetoothSender extends Thread{
 	}
 
 	public void run(){
+		/*
 		try{
 			while(true){
 
 				Odometer od = Odometer.getInstance();
 
 				if(od != null){
+					//ostream.write(Map);
 					ostream.writeDouble(od.x);
 					ostream.writeDouble(od.y);
 					ostream.writeDouble(od.orientation);
@@ -76,6 +79,6 @@ class BluetoothSender extends Thread{
 				Thread.sleep(SEND_WAIT);
 			}
 
-		}catch(Exception e){}
+		}catch(Exception e){}*/
 	}
 }

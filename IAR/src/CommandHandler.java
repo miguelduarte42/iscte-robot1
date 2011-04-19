@@ -1,7 +1,7 @@
 
 public class CommandHandler {
 	
-	private final static int
+	public final static int
 						FORWARD = 2,
 						BACKWARD = 8,
 						STOP = 5,
@@ -34,12 +34,12 @@ public class CommandHandler {
 				right = -360;
 				break;
 			case LEFT:
-				left = 50;
-				right = 360;
+				left = 75;
+				right = 250;
 				break;
 			case RIGHT:
-				left = 360;
-				right = 50;
+				left = 250;
+				right = 75;
 				break;
 			case STOP:
 				break;
