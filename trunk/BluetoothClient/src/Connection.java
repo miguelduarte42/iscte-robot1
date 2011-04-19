@@ -1,5 +1,7 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Scanner;
 import lejos.pc.comm.NXTCommBluecove;  
 import lejos.pc.comm.NXTInfo; 
@@ -56,14 +58,54 @@ public class Connection {
 
 		public void run() {
 			try{
-				String received = "";
-				while(received!=null){
-					received = inputStream.readLine();
-					System.out.println(received);
+				
+				//RobotWindow rw = new RobotWindow();
+				MapWindow mw = new MapWindow();
+				double r1 = 0;
+				double r2 = 0;
+				double r3 = 0;
+				long r4 = 0;
+				double r5 = 0;
+				double r6 = 0;
+				double r7 = 0;
+				double r8 = 0;
+				
+				while(true){
+					int x = inputStream.readInt();
+					int y = inputStream.readInt();
+					int status = inputStream.readInt();
+					if(status == 0)
+						Map.getInstance().markEmpty(x, y);
+					else
+						Map.getInstance().markOccuppied(x, y);
+					System.out.println("x: "+x+" y: "+y+" status: "+status);
+					
+					/*r1 = inputStream.readDouble();
+					r2 = inputStream.readDouble();
+					r3 = inputStream.readDouble();
+					r4 = inputStream.readLong();
+					r5 = inputStream.readDouble();
+					r6 = inputStream.readDouble();
+					r7 = inputStream.readDouble();
+					r8 = inputStream.readDouble();
+					
+					System.out.println("x: " + r1 + " y: " + r2 + " o: " + r3 +" t: "+r4+" lt: "+r5+" rt: "+r6 +" sl: "+r7+" sr: "+r8);
+					rw.step(r1, r2);*/
 				}
 			}catch(Exception e){
+				e.printStackTrace();
 				System.out.println("InputStream died");
 			}
+		}
+	}
+	
+	public void stop(){
+		try {
+			output.close();
+			input.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
