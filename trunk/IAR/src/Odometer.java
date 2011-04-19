@@ -1,14 +1,15 @@
 
 public class Odometer {
 
-	public double x = 0;
-	public double y = 0;
+	public double x = 40;
+	public double y = 40;
 	public double orientation = 0;
-	private double distance_wheels = 11;
+	private double distance_wheels = 11 / 2.0;
 	private double distance_left_degree;
 	private double distance_right_degree;
-	private static double leftWheelDiameter = 2.5;
-	private static double rightWheelDiameter = 2.5;
+	private static double leftWheelDiameter = 3.75 / 2.0;
+	private static double rightWheelDiameter = 3.75 / 2.0;
+	//Tracks: distance: 11 // wheelDiameter = 2.5
 	private static double radius_right = rightWheelDiameter/2;
 	private static double radius_left = leftWheelDiameter/2;
 	private static Odometer INSTANCE;
