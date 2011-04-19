@@ -25,9 +25,9 @@ public class Explorer {
 		//commandHandler.execute(CommandHandler.FORWARD);
 		
 		Behavior b1 = new Explore();
-	    Behavior b2 = new EvadeObstacle(touchSensor);
-	    //Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, motorHandler);
-	    Behavior b3 = new DetectWall();
+	    //Behavior b2 = new EvadeObstacle(touchSensor);
+	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, motorHandler);
+	    Behavior b2 = new DetectWall();
 	    Behavior [] bArray = {b1, b2, b3};
 	    new BehaviorRunner(new Arbitrator(bArray)).start();
 	    
