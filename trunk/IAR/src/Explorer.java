@@ -12,7 +12,7 @@ public class Explorer {
 	public Explorer() {
 		
 		CommandHandler commandHandler = CommandHandler.getInstance();
-		BluetoothHandler bluetoothHandler = new BluetoothHandler();
+		NXTConnHandler bluetoothHandler = new NXTConnHandler();
 		
 		MotorHandler motorHandler = MotorHandler.getInstance();
 		
@@ -22,12 +22,12 @@ public class Explorer {
 		TouchSensor touchSensor = new TouchSensor(SensorPort.S1);
 		System.out.println("Ready");
 		Button.waitForPress();
-		//commandHandler.execute(CommandHandler.FORWARD);
+		commandHandler.execute(CommandHandler.FORWARD);
 		
 		Behavior b1 = new Explore();
 	    //Behavior b2 = new EvadeObstacle(touchSensor);
-	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, motorHandler);
 	    Behavior b2 = new DetectWall();
+	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, motorHandler);
 	    Behavior [] bArray = {b1, b2, b3};
 	    new BehaviorRunner(new Arbitrator(bArray)).start();
 	    
