@@ -3,10 +3,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Scanner;
+
+import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommBluecove;  
+import lejos.pc.comm.NXTCommLibnxt;
+import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo; 
 
 public class Connection { 
+	private boolean BT = false;
 
 	public static void main(String[] args){ 
 		new GUI(new Connection());
@@ -24,28 +29,44 @@ public class Connection {
 				output.flush();
 			}catch(Exception e){e.printStackTrace();}
 	}
-
+	
 	public void connect(){
 		NXTInfo nxtCtrl = new NXTInfo(); 
-		nxtCtrl.deviceAddress = "00:16:53:0e:4d:69"; 
+		nxtCtrl.deviceAddress = "00:16:53:0e:4d:69";
+		NXTConnector conn = new NXTConnector();
+		NXTComm com; 
 
-		NXTCommBluecove com = new NXTCommBluecove(); 
-
-		try{
-			com.open(nxtCtrl); 
-			System.out.println("Connection established!");
-
-			output = new DataOutputStream(com.getOutputStream());
-			input = new DataInputStream(com.getInputStream());
-
-			receiver = new DataReceiver(input);
-			receiver.start();
-			connected = true;
-		} 
-		catch(Exception e){
-			System.err.println("Could not establish connection.");
-			e.printStackTrace();
-		} 
+		if (BT){
+			try{
+				com = new NXTCommBluecove();
+				com.open(nxtCtrl); 
+				System.out.println("Connection established!");
+				output = new DataOutputStream(com.getOutputStream());
+				input = new DataInputStream(com.getInputStream());
+				receiver = new DataReceiver(input);
+				receiver.start();
+				connected = true;
+			} 
+			catch(Exception e){
+				System.err.println("Could not establish connection.");
+				e.printStackTrace();
+			}
+		}
+		else {
+			// TODO: for MAC USB use NXTCommFantom
+			//com = new NXTCommLibnxt();
+			if (!conn.connectTo("usb://"))//nxtCtrl, lejos.pc.comm.NXTComm.PACKET))//))
+			{ 
+				System.err.println("No NXT find using USB");
+				System.exit(1);	}
+			else{
+				output = new DataOutputStream(conn.getOutputStream());
+				input = new DataInputStream(conn.getInputStream());
+				receiver = new DataReceiver(input);
+				receiver.start();
+				connected = true;
+			}
+		}
 	}
 
 	public class DataReceiver extends Thread {
