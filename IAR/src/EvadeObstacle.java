@@ -1,3 +1,4 @@
+import lejos.nxt.Sound;
 import lejos.nxt.TouchSensor;
 import lejos.robotics.subsumption.Behavior;
 
@@ -40,6 +41,7 @@ public class EvadeObstacle implements Behavior{
 	}
 
 	public boolean takeControl() {
+		Sound.beep();
 		return touchSensor.isPressed();
 	}
 

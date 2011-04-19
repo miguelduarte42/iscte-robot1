@@ -27,11 +27,11 @@ public class Explorer {
 		Behavior b1 = new Explore();
 	    Behavior b2 = new EvadeObstacle(touchSensor);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, motorHandler);
-	    Behavior [] bArray = {b1, b2};
+	    Behavior [] bArray = {b1, b2, b3};
 	    new BehaviorRunner(new Arbitrator(bArray)).start();
 	    
-	    Behavior [] bArray2 = {b3};
-	    new BehaviorRunner(new Arbitrator(bArray2)).start();
+	    //Behavior [] bArray2 = {b3};
+	    //new BehaviorRunner(new Arbitrator(bArray2)).start();
 	}
 	
 	public static void main(String[] args) {
