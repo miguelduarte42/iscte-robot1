@@ -41,8 +41,11 @@ public class GUI extends JFrame{
 		
 		JPanel connectPanel = new JPanel();
 		JButton connect = new JButton("CONNECT");
+		JButton disconnect = new JButton("DISCONNECT");
 		connectPanel.add(connect);
+		connectPanel.add(disconnect);
 		connect.addActionListener(myAction);
+		disconnect.addActionListener(myAction);
 		
 		add(mainPanel, BorderLayout.NORTH);
 		add(connectPanel, BorderLayout.SOUTH);
@@ -76,7 +79,14 @@ class MyActionListener implements ActionListener{
 		}else if(b.getText().equals("RIGHT")){
 			c.send(6);
 		}else if(b.getText().equals("CONNECT")){
-			c.connect();
+			if(c==null){
+				c = new Connection();
+				c.connect();
+			}else
+				c.connect();
+		}else if(b.getText().equals("DISCONNECT")){
+			c.stop();
+			c = null;
 		}
 		
 	}
