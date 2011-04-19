@@ -23,13 +23,14 @@ class DetectWall implements Behavior
 
   public void suppress()
   {
-    //Since  this is highest priority behavior, suppress will never be called.
+    //Nothing to do
   }
 
   public void action()
   {
-    Motor.A.rotate(-180, true);// start Motor.A rotating backward
-    Motor.C.rotate(-360);  // rotate C farther to make the turn
+	  //TODO: Replace hard-coded turn by different turns according to the sonar distances
+    Motor.A.rotate(180, true);// start Motor.A rotating backward
+    Motor.C.rotate(360);  // rotate C farther to make the turn
   }
   private TouchSensor touch;
   private UltrasonicSensor sonar;

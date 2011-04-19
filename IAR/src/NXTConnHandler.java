@@ -1,33 +1,39 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import lejos.nxt.comm.BTConnection;
-import lejos.nxt.comm.Bluetooth;
 
-public class BluetoothHandler extends Thread
+import lejos.nxt.comm.NXTConnection;
+import lejos.nxt.comm.Bluetooth;
+import lejos.nxt.comm.USB;
+
+
+public class NXTConnHandler extends Thread
 {
+	private boolean BT = false; 
 	private DataInputStream istream;
 	private DataOutputStream ostream;
 
 	private int input;
 
-	public BluetoothHandler() {
+	public NXTConnHandler() {
 		start();
 	}
 
 	public void run() {
+		NXTConnection conn;
+		
+		if (BT)	{System.out.println("Waiting for BT Connection");conn = Bluetooth.waitForConnection();}
+		else	{System.out.println("Waiting for USB Connection");conn = USB.waitForConnection();}
 
-		System.out.println("Waiting for BT");
-
-		BTConnection conn = Bluetooth.waitForConnection();
 		conn.setIOMode(0); // Used when a pc connection is made
 
 		istream = conn.openDataInputStream();
 		ostream = conn.openDataOutputStream();
 
-		System.out.println("BT connected!");
-
-		new BluetoothSender(ostream).start();
+		if (BT)	{System.out.println("BT connected!");}
+		else	{System.out.println("USB connected!");}
+		
+		new NXTCommSender(ostream).start();
 
 		input = 0;
 		try{
@@ -49,13 +55,13 @@ public class BluetoothHandler extends Thread
 	}
 }
 
-class BluetoothSender extends Thread{
+class NXTCommSender extends Thread{
 
 	private DataOutputStream ostream;
 	private Map map = Map.getInstance();
 	private static int SEND_WAIT = 100;
 
-	public BluetoothSender(DataOutputStream ostream) {
+	public NXTCommSender(DataOutputStream ostream) {
 		this.ostream = ostream;
 	}
 
