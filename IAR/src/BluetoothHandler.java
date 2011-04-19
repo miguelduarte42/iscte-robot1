@@ -16,9 +16,9 @@ public class BluetoothHandler extends Thread
 	}
 
 	public void run() {
-		
+
 		System.out.println("Waiting for BT");
-		
+
 		BTConnection conn = Bluetooth.waitForConnection();
 		conn.setIOMode(0); // Used when a pc connection is made
 
@@ -40,10 +40,12 @@ public class BluetoothHandler extends Thread
 
 	public void sendCommand(int command)
 	{
-		try {
-			ostream.writeInt(command);
-			ostream.flush();
-		} catch (IOException e) {}
+		if(ostream != null){
+			try {
+				ostream.writeInt(command);
+				ostream.flush();
+			} catch (IOException e) {}
+		}
 	}
 }
 
