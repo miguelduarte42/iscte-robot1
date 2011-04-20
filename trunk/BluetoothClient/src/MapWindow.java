@@ -38,7 +38,7 @@ class MapPainter extends Canvas {
 	}
 
 	public void paint(Graphics g) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.gray);
 		
 		int factor = (SIZE/map.grid.length);
 		
@@ -50,7 +50,7 @@ class MapPainter extends Canvas {
 		for(int i = 0  ; i < map.grid.length ; i++){
 			for(int j = 0  ; j < map.grid[i].length ; j++){
 				if(map.grid[i][j] == 0)
-					g.setColor(Color.BLUE);
+					g.setColor(Color.WHITE);
 				else if(map.grid[i][j] == 1)
 					g.setColor(Color.RED);
 				else g.setColor(Color.BLACK);
@@ -58,11 +58,14 @@ class MapPainter extends Canvas {
 				//if(i==map.grid.length/2 && j==map.grid[0].length/2)
 					//g.setColor(Color.white);
 				
-				g.fillRect(i*factor, j*factor, i*factor+factor, j*factor+factor);
+				g.fillRect(j*factor, i*factor, factor, factor);
 				
 				g.setColor(Color.BLACK);
 				
 			}
 		}
+		
+		g.setColor(Color.GREEN);
+		g.fillRect(map.lastY*factor, map.lastX*factor, factor, factor);
 	}
 }
