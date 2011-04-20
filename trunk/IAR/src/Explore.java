@@ -12,8 +12,6 @@ public class Explore implements Behavior{
 		
 		while(!stop)
 			Thread.yield();
-		
-		CommandHandler.getInstance().execute(CommandHandler.STOP);
 	}
 
 	public void suppress() {
