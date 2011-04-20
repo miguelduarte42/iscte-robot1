@@ -1,17 +1,13 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.Scanner;
-
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommBluecove;  
-import lejos.pc.comm.NXTCommLibnxt;
 import lejos.pc.comm.NXTConnector;
 import lejos.pc.comm.NXTInfo; 
 
 public class Connection { 
-	private boolean BT = false;
+	private boolean BT = true;
 
 	public static void main(String[] args){ 
 		new GUI(new Connection());

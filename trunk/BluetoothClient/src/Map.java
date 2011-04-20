@@ -1,8 +1,8 @@
 import java.io.Serializable;
 
 public class Map implements Serializable{
-	
-	static int[][] grid = new int[200][200];
+	private static final int SIZE = 400;
+	static int[][] grid = new int[SIZE][SIZE];
 	private static Map INSTANCE; 
 	static int lastX = 0;
 	static int lastY = 0;
@@ -22,20 +22,34 @@ public class Map implements Serializable{
 	}
 	
 	public void markOccuppied(int x, int y){
-		if(!isOutOfBounds(x) && !isOutOfBounds(y)){
-			grid[x][y] = 1;
-			lastY = y;
-			lastX = x;
-		}
+		x+=SIZE/2;
+		y+=SIZE/2;
+		
+		/*int diff = x - SIZE/2;		
+		if(diff > 0) x = SIZE/2 + diff;
+		else x = SIZE/2 - diff;*/
+		
+		if(!isOutOfBounds(x) && !isOutOfBounds(y))
+			grid[y][x] = 1;
+
+		lastY = y;
+		lastX = x;
 	}
 	
 	public void markEmpty(int x, int y){
+		x+=SIZE/2;
+		y+=SIZE/2;
+		
+		/*int diff = x - SIZE/2;		
+		if(diff > 0) x = SIZE/2 + diff;
+		else x = SIZE/2 - diff;*/
+		
 		if(!isOutOfBounds(x) && !isOutOfBounds(y)){
-			if(grid[x][y] != 1)
-				grid[x][y] = 0;
-			lastY = y;
-			lastX = x;
+			if(grid[y][x] != 1)
+				grid[y][x] = 0;
 		}
+		lastY = y;
+		lastX = x;
 	}
 	
 	public boolean isOutOfBounds(int p){
