@@ -2,6 +2,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 
 public class MapWindow extends JFrame{
@@ -11,6 +12,8 @@ public class MapWindow extends JFrame{
 
 	public MapWindow() {
 		mp = new MapPainter(map); 
+		/*JScrollPane scroll = new JScrollPane();
+		scroll.add(mp);*/
 		add(mp);
 		pack();
 		setVisible(true);
@@ -34,18 +37,18 @@ class MapPainter extends Canvas {
 	
 	public MapPainter(Map map) {
 		this.map = map;
-		setSize(800,800);
+		setSize(SIZE,SIZE);
+		
 	}
 
 	public void paint(Graphics g) {
-		g.setColor(Color.gray);
 		
 		int factor = (SIZE/map.grid.length);
 		
-		for(int i = 0 ; i < map.grid.length ; i++)
-			g.drawLine(i*factor, 0, i*factor, SIZE);
-		for(int i = 0 ; i < map.grid[0].length ; i++)
-			g.drawLine(0, i*factor, SIZE, i*factor);
+		boolean skip = false;
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, SIZE, SIZE);
 		
 		for(int i = 0  ; i < map.grid.length ; i++){
 			for(int j = 0  ; j < map.grid[i].length ; j++){
@@ -53,19 +56,28 @@ class MapPainter extends Canvas {
 					g.setColor(Color.WHITE);
 				else if(map.grid[i][j] == 1)
 					g.setColor(Color.RED);
-				else g.setColor(Color.BLACK);
+				else skip = true;;
 				
 				//if(i==map.grid.length/2 && j==map.grid[0].length/2)
 					//g.setColor(Color.white);
 				
-				g.fillRect(j*factor, i*factor, factor, factor);
+				if(!skip){
+					g.fillRect(j*factor, i*factor, factor, factor);
+				}
 				
-				g.setColor(Color.BLACK);
+				skip = false;
 				
 			}
 		}
 		
 		g.setColor(Color.GREEN);
-		g.fillRect(map.lastY*factor, map.lastX*factor, factor, factor);
+		g.fillRect(map.lastX*factor, map.lastY*factor, factor, factor);
+		
+		g.setColor(Color.gray);
+		
+		for(int i = 0 ; i < map.grid.length ; i+=30)
+			g.drawLine(i*factor, 0, i*factor, SIZE);
+		for(int i = 0 ; i < map.grid[0].length ; i+=30)
+			g.drawLine(0, i*factor, SIZE, i*factor);
 	}
 }
