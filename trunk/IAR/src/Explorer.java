@@ -11,6 +11,8 @@ public class Explorer {
 	
 	public Explorer() {
 		
+		new OdometerReset();
+		
 		CommandHandler commandHandler = CommandHandler.getInstance();
 		NXTConnHandler bluetoothHandler = new NXTConnHandler();
 		
@@ -24,12 +26,13 @@ public class Explorer {
 		Button.waitForPress();
 		commandHandler.execute(CommandHandler.FORWARD);
 		
-		Behavior b1 = new Explore();
-	    Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
+		//Behavior b1 = new Explore();
+	    //Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, ultrasonicSensor, motorHandler);
-	    //Behavior b2 = new DetectWall();
-	    Behavior [] bArray = {b1, b2};
 	    
+	    //Behavior [] bArray = {b1, b2};
+	    Behavior b1 = new SquareBehavior();
+		Behavior [] bArray = {b1};
 	    new BehaviorRunner(new Arbitrator(bArray)).start();
 	    Behavior [] bArray2 = {b3};
 	    new BehaviorRunner(new Arbitrator(bArray2)).start();

@@ -1,8 +1,8 @@
 
 public class Odometer {
 
-	public double x = 100;
-	public double y = 100;
+	public double x = 0;
+	public double y = 0;
 	public double orientation = 0;
 	private double distance_wheels = 11;
 	private double distance_left_degree;

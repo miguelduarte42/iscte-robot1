@@ -1,15 +1,13 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import lejos.nxt.comm.NXTConnection;
 import lejos.nxt.comm.Bluetooth;
 import lejos.nxt.comm.USB;
 
-
 public class NXTConnHandler extends Thread
 {
-	private boolean BT = false; 
+	private boolean BT = true; 
 	private DataInputStream istream;
 	private DataOutputStream ostream;
 
