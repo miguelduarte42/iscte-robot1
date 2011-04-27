@@ -4,11 +4,11 @@ public class Odometer {
 	public double x = 0;
 	public double y = 0;
 	public double orientation = 0;
-	private double distance_wheels = 11;
+	private double distance_wheels = 13.55;
 	private double distance_left_degree;
 	private double distance_right_degree;
-	private static double leftWheelDiameter = 3.75;
-	private static double rightWheelDiameter = 3.75;
+	private static double leftWheelDiameter = 4.5;
+	private static double rightWheelDiameter = 4.5;
 	//Tracks: distance: 11 // wheelDiameter = 2.5
 	private static double radius_right = rightWheelDiameter/2;
 	private static double radius_left = leftWheelDiameter/2;

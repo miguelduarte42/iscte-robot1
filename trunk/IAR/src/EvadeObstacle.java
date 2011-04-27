@@ -8,12 +8,11 @@ public class EvadeObstacle implements Behavior{
 
 	private TouchSensor touchSensor;
 	private UltrasonicSensor ultrasonicSensor;
-	private boolean turning = false;
-	private boolean backwards = false;
-	private static long BACKTIME_INC = 1000;
-	private static long BACKTIME_MIN = 1000;
+	private static long BACKTIME_INC = 500;
+	private static long BACKTIME_MIN = 500;
 	private static long TURNTIME_INC = 2000;
 	private static long TURNTIME_MIN = 1000;
+	private static long SENSOR_DISTANCE = 40;
 
 	public EvadeObstacle(TouchSensor s, UltrasonicSensor us) {
 		this.touchSensor = s;
@@ -27,13 +26,13 @@ public class EvadeObstacle implements Behavior{
 
 		long rand_back_time = (long)(BACKTIME_MIN + Math.random() * BACKTIME_INC);
 
-		if(ultrasonicSensor.getDistance() > 15)
-			rand_back_time = BACKTIME_MIN;
+		if(ultrasonicSensor.getDistance() < SENSOR_DISTANCE){
+			rand_back_time = 0;
+		}
 		
-		while(System.currentTimeMillis() - startTime < rand_back_time){
+		while(System.currentTimeMillis() - startTime <= rand_back_time){
 			Thread.yield();
 		}
-
 
 		startTime = System.currentTimeMillis();
 		CommandHandler.getInstance().execute(CommandHandler.RIGHT);
@@ -53,9 +52,11 @@ public class EvadeObstacle implements Behavior{
 	}
 
 	public boolean takeControl() {
-		ultrasonicSensor.ping();
-		Sound.pause(20);
-		return touchSensor.isPressed() || ultrasonicSensor.getDistance() < 15;
+		
+		double distance = ultrasonicSensor.getDistance();
+		if(distance == 4) distance = 1000;//SENSOR IS STUPID AND READS RANDOM 4s
+		
+		return touchSensor.isPressed() || distance < SENSOR_DISTANCE;
 	}
 
 }
