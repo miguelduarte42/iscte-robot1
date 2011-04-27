@@ -1,4 +1,12 @@
 
+/**
+ * @author Group1 - IAR
+ *
+ * This class receives the commands (FORWARD, BACKWARD, STOP, LEFT, RIGHT)
+ *  and based on this sends the correct left and right speeds to the MotorHandler class
+ *
+ * @see MotorHandler
+ */
 public class CommandHandler {
 	
 	public final static int

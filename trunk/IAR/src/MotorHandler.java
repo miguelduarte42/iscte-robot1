@@ -1,6 +1,15 @@
 import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 
+/**
+ * @author Group1 - IAR
+ *
+ *  This class controls the motors.
+ *  It receives the left and right speed and passes it to the motors.
+ *  It is also used to get the tacho reading from the motors
+ *  
+ * @see CommandHandler
+ */
 public class MotorHandler {
 	
 	private static final MotorPort PORT_MOTOR_LEFT = MotorPort.A;
@@ -36,7 +45,7 @@ public class MotorHandler {
 	}
 	
 	private void applySpeedToSingleWheel(Motor m, int s){
-		
+		// TODO: Change to gentle stop between going forward and backward.
 		m.setSpeed(s);
 		
 		if(s > 0) m.forward();
