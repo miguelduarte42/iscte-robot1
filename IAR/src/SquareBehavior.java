@@ -1,3 +1,4 @@
+import lejos.nxt.Button;
 import lejos.robotics.subsumption.Behavior;
 
 
@@ -13,6 +14,8 @@ public class SquareBehavior implements Behavior{
 		int max = 4*4;
 
 		while(true){
+			if (Button.ESCAPE.isPressed()) break;
+
 			CommandHandler.getInstance().execute(CommandHandler.FORWARD);
 			try {Thread.sleep(sleepTime);} catch (InterruptedException e) {}
 			
