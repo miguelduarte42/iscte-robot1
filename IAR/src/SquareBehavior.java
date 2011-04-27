@@ -7,7 +7,10 @@ public class SquareBehavior implements Behavior{
 	public void action() {
 
 		double rotation = Math.PI/2;
-		long sleepTime = 5000;
+		long sleepTime = 3000;
+		
+		int current = 0;
+		int max = 4*4;
 
 		while(true){
 			CommandHandler.getInstance().execute(CommandHandler.FORWARD);
@@ -18,6 +21,7 @@ public class SquareBehavior implements Behavior{
 			while(Odometer.getInstance().orientation <= currOrientation + rotation){
 				//try {Thread.sleep(10);} catch (InterruptedException e) {}
 			}
+
 		}
 
 	}

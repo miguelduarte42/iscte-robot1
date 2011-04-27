@@ -20,8 +20,8 @@ public class NXTConnHandler extends Thread
 	public void run() {
 		NXTConnection conn;
 		
-		if (BT)	{System.out.println("Waiting for BT Connection");conn = Bluetooth.waitForConnection();}
-		else	{System.out.println("Waiting for USB Connection");conn = USB.waitForConnection();}
+		if (BT)	{System.out.println("Waiting for BT");conn = Bluetooth.waitForConnection();}
+		else	{System.out.println("Waiting for USB");conn = USB.waitForConnection();}
 
 		conn.setIOMode(0); // Used when a pc connection is made
 

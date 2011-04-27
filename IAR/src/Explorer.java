@@ -24,13 +24,12 @@ public class Explorer {
 		TouchSensor touchSensor = new TouchSensor(SensorPort.S1);
 		System.out.println("Ready");
 		Button.waitForPress();
-		commandHandler.execute(CommandHandler.FORWARD);
+		//commandHandler.execute(CommandHandler.FORWARD);
 		
 		//Behavior b1 = new Explore();
 	    //Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, ultrasonicSensor, motorHandler);
 	    
-	    //Behavior [] bArray = {b1, b2};
 	    Behavior b1 = new SquareBehavior();
 		Behavior [] bArray = {b1};
 	    new BehaviorRunner(new Arbitrator(bArray)).start();
