@@ -36,7 +36,7 @@ public class Explorer {
 	    Behavior b4 = new SquareBehavior();
 	    
 	    boolean autonomous = true;
-	    boolean square = false;
+	    boolean square = true;
 	    
 	    if(autonomous){
 	    	Behavior [] bArray = {b1,b2};
