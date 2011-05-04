@@ -56,6 +56,8 @@ class MapPainter extends Canvas {
 					g.setColor(Color.WHITE);
 				else if(map.grid[i][j] == 1)
 					g.setColor(Color.RED);
+				else if(map.grid[i][j] == 2)
+					g.setColor(Color.YELLOW);
 				else skip = true;;
 				
 				//if(i==map.grid.length/2 && j==map.grid[0].length/2)

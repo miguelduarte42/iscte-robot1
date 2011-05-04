@@ -22,6 +22,9 @@ public class Map implements Serializable{
 	}
 	
 	public void markOccuppied(int x, int y){
+		
+		y*=-1;
+		
 		x+=SIZE/2;
 		y+=SIZE/2;
 		
@@ -32,11 +35,27 @@ public class Map implements Serializable{
 		if(!isOutOfBounds(x) && !isOutOfBounds(y))
 			grid[y][x] = 1;
 
-		lastY = y;
-		lastX = x;
+		//lastY = y;
+		//lastX = x;
+	}
+	
+	public void markCrashed(int x, int y){
+		
+		y*=-1;
+		
+		x+=SIZE/2;
+		y+=SIZE/2;
+		
+		if(!isOutOfBounds(x) && !isOutOfBounds(y)){
+			if(grid[y][x] != 1)
+				grid[y][x] = 2;
+		}
 	}
 	
 	public void markEmpty(int x, int y){
+		
+		y*=-1;
+		
 		x+=SIZE/2;
 		y+=SIZE/2;
 		
@@ -45,7 +64,7 @@ public class Map implements Serializable{
 		else x = SIZE/2 - diff;*/
 		
 		if(!isOutOfBounds(x) && !isOutOfBounds(y)){
-			if(grid[y][x] != 1)
+			if(grid[y][x] != 1 && grid[y][x] != 2)
 				grid[y][x] = 0;
 		}
 		lastY = y;
@@ -53,7 +72,7 @@ public class Map implements Serializable{
 	}
 	
 	public boolean isOutOfBounds(int p){
-		if(p < 0 || p > grid.length)
+		if(p < 0 || p >= SIZE)
 			return true;
 		return false;
 	}

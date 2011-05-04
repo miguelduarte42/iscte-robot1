@@ -93,8 +93,10 @@ public class Connection {
 					int status = inputStream.readInt();
 					if(status == 0)
 						Map.getInstance().markEmpty(x, y);
-					else
+					else if(status == 1)
 						Map.getInstance().markOccuppied(x, y);
+					else if(status == 2)
+						Map.getInstance().markCrashed(x, y);
 					System.out.println("x: "+x+" y: "+y+" status: "+status);
 					
 					/*r1 = inputStream.readDouble();
