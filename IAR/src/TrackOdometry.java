@@ -45,11 +45,13 @@ public class TrackOdometry implements Behavior {
 			
 			x = (int)(x + Math.cos(orientation) * distance);
 			y = (int)(y + Math.sin(orientation) * distance);
+			
+			//Sound.beep();
+			command = 1;
 		}
 			
-		if(touch.isPressed() || distance < SONAR_DISTANCE){
-			Sound.beep();
-			command = 1;
+		if(touch.isPressed() && distance >= SONAR_DISTANCE){
+			command = 2;
 			//Map.getInstance().markOccuppied(x, y);
 		}
 		

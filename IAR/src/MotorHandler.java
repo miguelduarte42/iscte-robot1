@@ -22,7 +22,10 @@ public class MotorHandler {
 	
 	
 	private MotorHandler(){
-		
+		motorLeft.regulateSpeed(true);
+		motorRight.regulateSpeed(true);
+		motorLeft.smoothAcceleration(true);
+		motorRight.smoothAcceleration(true);
 	}
 	
 	public static MotorHandler getInstance(){
@@ -50,7 +53,7 @@ public class MotorHandler {
 		
 		if(s > 0) m.forward();
 		else if(s < 0) m.backward();
-		else m.stop();
+		else m.flt();
 	}
 	
 	public int getRightTacho(){
