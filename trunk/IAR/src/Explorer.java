@@ -21,22 +21,36 @@ public class Explorer {
 		//Map map = Map.getInstance();
 		
 		UltrasonicSensor ultrasonicSensor = new UltrasonicSensor(SensorPort.S3);
+		ultrasonicSensor.continuous();
+		ultrasonicSensor.setContinuousInterval((byte) 10);
+		ultrasonicSensor.setCalibrationData(new byte[] {0,1,10});
+		
 		TouchSensor touchSensor = new TouchSensor(SensorPort.S1);
 		System.out.println("Ready");
 		Button.waitForPress();
 		//commandHandler.execute(CommandHandler.FORWARD);
 		
-		//Behavior b1 = new Explore();
-	    //Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
+		Behavior b1 = new Explore();
+	    Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, ultrasonicSensor, motorHandler);
+	    Behavior b4 = new SquareBehavior();
 	    
-	    Behavior b1 = new SquareBehavior();
-		Behavior [] bArray = {b1};
-	    new BehaviorRunner(new Arbitrator(bArray)).start();
+	    boolean autonomous = true;
+	    boolean square = false;
+	    
+	    if(autonomous){
+	    	Behavior [] bArray = {b1,b2};
+		    new BehaviorRunner(new Arbitrator(bArray)).start();
+	    }
+	    
+	    if(square){
+	    	Behavior [] bArray = {b4};
+	    	new BehaviorRunner(new Arbitrator(bArray)).start();
+	    }
+	    
 	    Behavior [] bArray2 = {b3};
 	    new BehaviorRunner(new Arbitrator(bArray2)).start();
-	    //Behavior [] bArray2 = {b3};
-	    //new BehaviorRunner(new Arbitrator(bArray2)).start();
+	    
 	}
 	
 	public static void main(String[] args) {
