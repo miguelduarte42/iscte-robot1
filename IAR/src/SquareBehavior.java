@@ -8,7 +8,7 @@ public class SquareBehavior implements Behavior{
 	public void action() {
 
 		double rotation = Math.PI/2;
-		long sleepTime = 3000;
+		long sleepTime = 4000;
 		
 		int current = 0;
 		int max = 4*4;
