@@ -21,8 +21,6 @@ public class EvadeObstacle implements Behavior{
 	}
 
 	public void action() {
-
-		long startTime = System.currentTimeMillis();
 		
 		double distance = ultrasonicSensor.getDistance();
 		if(distance == 4) distance = 1000;
@@ -30,8 +28,10 @@ public class EvadeObstacle implements Behavior{
 		
 		stopSmoothly();
 
-		if(pressed)
+		if(pressed){
 			goBackwards();
+			stopSmoothly();
+		}
 		
 		turnRight();
 		
@@ -77,10 +77,10 @@ public class EvadeObstacle implements Behavior{
 	}
 
 	public boolean takeControl() {
-		
+
 		double distance = ultrasonicSensor.getDistance();
 		if(distance == 4) distance = 1000;//SENSOR IS STUPID AND READS RANDOM 4s
-		
+
 		return touchSensor.isPressed() || distance < SENSOR_DISTANCE;
 	}
 
