@@ -34,9 +34,13 @@ public class Explorer {
 	    Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, ultrasonicSensor, motorHandler);
 	    Behavior b4 = new SquareBehavior();
+	    Behavior b5 = new CircleBehavior();
+	    Behavior b6 = new HeadBehavior();
 	    
-	    boolean autonomous = true;
-	    boolean square = true;
+	    boolean autonomous = false;
+	    boolean square = false;
+	    boolean circle = false;
+	    boolean head = true;
 	    
 	    if(autonomous){
 	    	Behavior [] bArray = {b1,b2};
@@ -45,6 +49,16 @@ public class Explorer {
 	    
 	    if(square){
 	    	Behavior [] bArray = {b4};
+	    	new BehaviorRunner(new Arbitrator(bArray)).start();
+	    }
+	    
+	    if(circle){
+	    	Behavior [] bArray = {b5};
+	    	new BehaviorRunner(new Arbitrator(bArray)).start();
+	    }
+	    
+	    if(head){
+	    	Behavior [] bArray = {b6};
 	    	new BehaviorRunner(new Arbitrator(bArray)).start();
 	    }
 	    
