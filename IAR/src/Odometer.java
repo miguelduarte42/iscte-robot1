@@ -1,10 +1,10 @@
 
 public class Odometer {
 
-	public double x = 0;
-	public double y = 0;
+	public double x = 10;
+	public double y = 10;
 	public double orientation = 0;
-	private double distance_wheels = 13.55;//13.55 15
+	private double distance_wheels = 13.4;//13.55 chao da sala 13.2 mesa sala de estudo
 	private double distance_left_degree;
 	private double distance_right_degree;
 	private static double leftWheelDiameter = 4.5;

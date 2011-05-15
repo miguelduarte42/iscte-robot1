@@ -32,7 +32,7 @@ public class TrackOdometry implements Behavior {
 		int y = (int)odometer.y;
 		
 		int command = 0;
-		
+		/*
 		double distance = sonar.getDistance();
 		if(distance == 4) distance = 1000;//SENSOR IS STUPID AND READS RANDOM 4s
 			
@@ -48,9 +48,9 @@ public class TrackOdometry implements Behavior {
 			
 			//Sound.beep();
 			command = 1;
-		}
+		}*/
 			
-		if(touch.isPressed() && distance >= SONAR_DISTANCE){
+		if(touch.isPressed()/* && distance >= SONAR_DISTANCE*/){
 			command = 2;
 			//Map.getInstance().markOccuppied(x, y);
 		}
@@ -62,9 +62,8 @@ public class TrackOdometry implements Behavior {
 	}
 	
 	private void enviaMensagem(int x, int y, int status){
-		blue.sendCommand(x);
-		blue.sendCommand(y);
-		blue.sendCommand(status);
+		int[] commands = {x,y,status};
+		blue.sendCommands(commands);
 	}
 
 	public void suppress() {
@@ -80,11 +79,11 @@ public class TrackOdometry implements Behavior {
 		
 		if(x != prevX || y != prevY)
 			return true;
-		
+		/*
 		double distance = sonar.getDistance();
 		if(distance == 4) distance = 1000;//SENSOR IS STUPID AND READS RANDOM 4s
-		
-		if(touch.isPressed() || distance < SONAR_DISTANCE)
+		*/
+		if(touch.isPressed()/* || distance < SONAR_DISTANCE*/)
 			return true;
 		
 		return false;

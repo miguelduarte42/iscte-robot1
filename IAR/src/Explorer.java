@@ -1,4 +1,6 @@
 import lejos.nxt.Button;
+import lejos.nxt.Motor;
+import lejos.nxt.MotorPort;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
 import lejos.nxt.TouchSensor;
@@ -31,16 +33,16 @@ public class Explorer {
 		//commandHandler.execute(CommandHandler.FORWARD);
 		
 		Behavior b1 = new Explore();
-	    Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor);
+	    Behavior b2 = new EvadeObstacle(touchSensor,ultrasonicSensor,bluetoothHandler);
 	    Behavior b3 = new TrackOdometry(bluetoothHandler, touchSensor, ultrasonicSensor, motorHandler);
 	    Behavior b4 = new SquareBehavior();
 	    Behavior b5 = new CircleBehavior();
-	    Behavior b6 = new HeadBehavior();
+	    Behavior b6 = new HeadBehavior(bluetoothHandler, new Motor(MotorPort.B), ultrasonicSensor);
 	    
-	    boolean autonomous = false;
+	    boolean autonomous = true;
 	    boolean square = false;
 	    boolean circle = false;
-	    boolean head = true;
+	    boolean head = false;
 	    
 	    if(autonomous){
 	    	Behavior [] bArray = {b1,b2};
