@@ -10,6 +10,7 @@ public class NXTConnHandler extends Thread
 	private boolean BT = true; 
 	private DataInputStream istream;
 	private DataOutputStream ostream;
+	private boolean beingUsed = false;
 
 	private int input;
 
@@ -46,8 +47,33 @@ public class NXTConnHandler extends Thread
 	{
 		if(ostream != null){
 			try {
+				
+				while(beingUsed);
+				
+				beingUsed = true;
+				
 				ostream.writeInt(command);
 				ostream.flush();
+				
+				beingUsed = false;
+			} catch (IOException e) {}
+		}
+	}
+	
+	public void sendCommands(int[] commands){
+		if(ostream != null){
+			try {
+				
+				while(beingUsed);
+				
+				beingUsed = true;
+				
+				for(int i = 0 ; i < commands.length; i++){
+					ostream.writeInt(commands[i]);
+					ostream.flush();
+				}
+				
+				beingUsed = false;
 			} catch (IOException e) {}
 		}
 	}
