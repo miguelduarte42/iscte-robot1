@@ -22,32 +22,9 @@ public class HeadBehavior implements Behavior{
 	@Override
 	public void action() {
 		
-		int angle = 0;
-		
-		int degrees = 5;
-		int max = 90;
-		
-		while(true){
-			
-			angle = 0;
-			
-			while(angle < max){
-				head.rotate(degrees);
-				angle+=degrees;
-				leitura(angle);
-			}
-			
-			head.rotateTo(0);
-			angle = 0;
-			
-			while(angle > -max){
-				head.rotate(-degrees);
-				angle-=degrees;
-				leitura(angle);
-			}
-			
-			head.rotateTo(0);
-		}
+		sonar.ping();
+		try {Thread.sleep(25);} catch (Exception e) {}
+		System.out.println(sonar.getDistance());
 		
 	}
 	
