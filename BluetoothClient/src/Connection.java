@@ -1,5 +1,7 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import lejos.pc.comm.NXTComm;
 import lejos.pc.comm.NXTCommBluecove;  
@@ -17,7 +19,7 @@ public class Connection {
 	DataInputStream input;
 	DataReceiver receiver;
 	boolean connected = false;
-	
+
 	public void send(int n){
 		if(connected)
 			try{
@@ -25,7 +27,7 @@ public class Connection {
 				output.flush();
 			}catch(Exception e){e.printStackTrace();}
 	}
-	
+
 	public void connect(){
 		NXTInfo nxtCtrl = new NXTInfo(); 
 		nxtCtrl.deviceAddress = "00:16:53:0e:4d:69";
@@ -74,8 +76,12 @@ public class Connection {
 		}
 
 		public void run() {
+
+			FileWriter fileOut = null;
 			try{
-				
+
+				fileOut = new FileWriter(System.currentTimeMillis()+".txt");
+
 				//RobotWindow rw = new RobotWindow();
 				MapWindow mw = new MapWindow();
 				double r1 = 0;
@@ -86,11 +92,17 @@ public class Connection {
 				double r6 = 0;
 				double r7 = 0;
 				double r8 = 0;
-				
+
 				while(true){
 					int x = inputStream.readInt();
 					int y = inputStream.readInt();
 					int status = inputStream.readInt();
+
+					if(fileOut != null){
+						fileOut.write(x+" "+y+" "+status+"\n");
+						fileOut.flush();
+					}
+
 					if(status == 0)
 						Map.getInstance().markEmpty(x, y);
 					else if(status == 1)
@@ -98,7 +110,7 @@ public class Connection {
 					else if(status == 2)
 						Map.getInstance().markCrashed(x, y);
 					System.out.println("x: "+x+" y: "+y+" status: "+status);
-					
+
 					/*r1 = inputStream.readDouble();
 					r2 = inputStream.readDouble();
 					r3 = inputStream.readDouble();
@@ -107,17 +119,30 @@ public class Connection {
 					r6 = inputStream.readDouble();
 					r7 = inputStream.readDouble();
 					r8 = inputStream.readDouble();
-					
+
 					System.out.println("x: " + r1 + " y: " + r2 + " o: " + r3 +" t: "+r4+" lt: "+r5+" rt: "+r6 +" sl: "+r7+" sr: "+r8);
 					rw.step(r1, r2);*/
 				}
 			}catch(Exception e){
 				e.printStackTrace();
 				System.out.println("InputStream died");
+				try {
+					fileOut.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}finally{
+				try {
+					fileOut.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
-	
+
 	public void stop(){
 		try {
 			output.close();
