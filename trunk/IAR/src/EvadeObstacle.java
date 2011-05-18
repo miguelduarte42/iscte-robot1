@@ -1,3 +1,4 @@
+import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.Sound;
@@ -42,7 +43,7 @@ public class EvadeObstacle implements Behavior{
 
 		turnRight();
 		stopSmoothly();
-		lookAround();
+		//lookAround();
 
 	}
 
@@ -91,17 +92,20 @@ public class EvadeObstacle implements Behavior{
 
 		int degrees = 5;
 		int max = 90;
+		int min = -90;
 
-		angle = 0;
+		angle = max;
+		
+		head.rotateTo(max);
 
-		while(angle < max){
-			head.rotate(degrees);
-			angle+=degrees;
+		while(angle > min){
+			head.rotate(-degrees);
+			angle-=degrees;
 			leitura(angle);
 		}
 
 		head.rotateTo(0);
-		angle = 0;
+		/*angle = 0;
 
 		while(angle > -max){
 			head.rotate(-degrees);
@@ -109,7 +113,7 @@ public class EvadeObstacle implements Behavior{
 			leitura(angle);
 		}
 
-		head.rotateTo(0);
+		head.rotateTo(0);*/
 	}
 
 
@@ -121,21 +125,43 @@ public class EvadeObstacle implements Behavior{
 	private void leitura(double headAngle){
 
 		Odometer odometer = Odometer.getInstance();
-		int[] pings = new int[3];
 		int total = 0;
+		int read = 0;
+		
+		int totalReads = 0;
 
-		for(int i = 0; i < 3 ; i++){
+		for(int i = 0; i < 15 ; i++){
 			ultrasonicSensor.ping();
-			try {Thread.sleep(25);} catch (Exception e) {}
-			pings[i] = ultrasonicSensor.getDistance();
-			total+=pings[i];
+			try {Thread.sleep(20);} catch (Exception e) {}
+			read = ultrasonicSensor.getDistance();
+			
+			if(read > 0 && read < 255){
+				total+=read;
+				totalReads++;
+			}
+			
+			System.out.println(i+": "+read+"   ");
 		}
-
-		int average = total/3;
+		
+		
+		int average = 0;
+		if(totalReads > 0)
+			average = total / totalReads;
+		
+		System.out.println("a: "+average+"   ");
+		
+		//System.out.println(average);
 
 		double x = odometer.x;
 		double y = odometer.y;
 		double orientation = odometer.orientation;
+		
+		//move x and y to the head
+		
+		int headDistance = 7; //cm from wheels to head
+		
+		x+=Math.cos(orientation)*headDistance;
+		y+=Math.sin(orientation)*headDistance;
 
 		//headAngle to radians
 		headAngle = (2*Math.PI*headAngle)/360;
@@ -147,7 +173,7 @@ public class EvadeObstacle implements Behavior{
 		
 		//o y tem que estar negativo, porque a posição vertical relativa do motor está invertida
 
-		if(average < 40)
+		if(average > 0 && average < 255)
 			enviaMensagem((int)x,(int)y,1);
 
 	}
