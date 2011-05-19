@@ -173,7 +173,7 @@ public class EvadeObstacle implements Behavior{
 		
 		//o y tem que estar negativo, porque a posi‹o vertical relativa do motor est‡ invertida
 
-		if(average > 0 && average < 255)
+		if(average > 0 && average < 50)
 			enviaMensagem((int)x,(int)y,1);
 
 	}
